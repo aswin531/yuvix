@@ -1,15 +1,9 @@
-
-
-import 'dart:developer';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controller/product_services.dart';
-import '../../models/productmodel.dart';
-
 
 class CategoryDetailPage extends StatelessWidget {
-   
   final String category;
 
   CategoryDetailPage({required this.category});
@@ -17,19 +11,16 @@ class CategoryDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productService = Provider.of<ProductService>(context);
- productService.getProducts();
+    productService.getProducts();
+    
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff03448c),
-        title: Text('${category} Products'),
-      ),
-      body:Consumer<ProductService>(
-        
-        builder: (context, value, child) {
-          // final productService = Provider.of<ProductService>(context);
-          // productService.getProducts();
+        appBar: AppBar(
+          backgroundColor: Color(0xff03448c),
+          title: Text('${category} Products'),
+        ),
+        body: Consumer<ProductService>(builder: (context, value, child) {
+          var filterProducts = value.productsMy.where((element) => element.category == category).toList();
 
-          
           return GridView.builder(
               padding: EdgeInsets.all(8.0),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -38,28 +29,21 @@ class CategoryDetailPage extends StatelessWidget {
                 mainAxisSpacing: 8.0,
                 childAspectRatio: 0.7,
               ),
-              itemCount: value.productsMy.length,
+              itemCount: filterProducts.length,
               itemBuilder: (context, index) {
-                final product = value.productsMy[index];
-                return
-                ProductCard(
+                final product = filterProducts[index];
+
+                print("Product image: ${product.image}");
+                return ProductCard(
                   imageUrl: product.image ?? 'https://via.placeholder.com/150',
                   productName: product.productName,
                   color: product.color ?? 'Unknown Color',
                   price: '₹${product.price.toStringAsFixed(2)}',
                 );
-              }
-            );
-        }
-         
-      )
- 
-    );
+              });
+        }));
   }
 }
-
-
-
 
 class ProductCard extends StatelessWidget {
   final String imageUrl;
@@ -83,7 +67,8 @@ class ProductCard extends StatelessWidget {
         children: [
           Stack(
             children: [
-              Image.network(imageUrl, fit: BoxFit.cover, width: double.infinity, height: 100),
+              Image.file(File(imageUrl),
+                  fit: BoxFit.cover, width: double.infinity, height: 100),
             ],
           ),
           Padding(
@@ -102,7 +87,10 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       price,
-                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.orange),
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange),
                     ),
                     SizedBox(width: 4.0),
                   ],

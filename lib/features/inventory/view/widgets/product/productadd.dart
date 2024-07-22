@@ -95,7 +95,8 @@ class _AddProductState extends State<AddProduct> {
 
     await Provider.of<ProductService>(context, listen: false)
         .addProduct(newProduct);
-        log('Added>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+    log('............................${newProduct.image}');
+    log('Added>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Product Added')),

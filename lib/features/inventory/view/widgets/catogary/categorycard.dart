@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:yuvix/features/inventory/controller/product_services.dart';
+// import 'package:provider/provider.dart';
+// import 'package:yuvix/features/inventory/controller/product_services.dart';
 import 'package:yuvix/features/inventory/models/categorymodel.dart';
 
 import '../../screens/CategoryDetailPage.dart';
@@ -14,6 +14,8 @@ class CatCard extends StatelessWidget {
 final CategoryModel cat;
   @override
   Widget build(BuildContext context) {
+    
+    print(".,,,,,,,,,,,,,,,,,,,,,,,,${cat.productCount}");
      
     return  Card(
       elevation: 2,
@@ -42,7 +44,7 @@ final CategoryModel cat;
               SizedBox(height: 7),
               Text(cat.categoryName!),
               SizedBox(height: 5),
-              Text(cat.productCount.toString()),
+            //  Text(cat.productCount.toString()),
               SizedBox(height: 5),
               // Text('brandCount'),
             ],
