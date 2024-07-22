@@ -1,12 +1,12 @@
-
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart'; // Newly added
+import 'package:provider/provider.dart';
 import 'package:yuvix/features/inventory/controller/category_Service.dart';
 import 'package:yuvix/features/inventory/models/categorymodel.dart';
 import 'package:yuvix/features/inventory/models/brandmodel.dart';
-import 'package:yuvix/features/inventory/models/productmodel.dart'; // Newly added
+import 'package:yuvix/features/inventory/models/productmodel.dart';
 
 import '../../../controller/brand_services.dart';
 import '../../../controller/product_services.dart';
@@ -60,13 +60,16 @@ class _AddProductState extends State<AddProduct> {
     _brandsFuture = BrandService().getBrands();
   }
 
-
-  Future<void> addProduct() async { 
-    if (productNameController.text.isEmpty || _image == null || _selectedType == null || _selectedBrand == null) {
+  Future<void> addProduct() async {
+    if (productNameController.text.isEmpty ||
+        _image == null ||
+        _selectedType == null ||
+        _selectedBrand == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill all the fields and select an image.')),
+        SnackBar(
+            content: Text('Please fill all the fields and select an image.')),
       );
-      return ;
+      return;
     }
 
     final newProduct = ProductModel(
@@ -90,7 +93,9 @@ class _AddProductState extends State<AddProduct> {
       material: materialController.text,
     );
 
-    await Provider.of<ProductService>(context, listen: false).addProduct(newProduct); // Newly added
+    await Provider.of<ProductService>(context, listen: false)
+        .addProduct(newProduct);
+        log('Added>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Product Added')),
@@ -297,28 +302,27 @@ class _AddProductState extends State<AddProduct> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        
         ElevatedButton(
           onPressed: () {
             Navigator.pop(context);
           },
           child: Text('Cancel'),
           style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      fixedSize: Size(100, 50), 
-        ),),
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            fixedSize: Size(100, 50),
+          ),
+        ),
         ElevatedButton(
           onPressed: addProduct,
           child: Text('Add'),
           style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      fixedSize: Size(100, 50), 
-        ),),
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+            fixedSize: Size(100, 50),
+          ),
+        ),
       ],
     );
   }
 }
-
-

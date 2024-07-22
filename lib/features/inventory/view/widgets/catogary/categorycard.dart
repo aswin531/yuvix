@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:yuvix/features/inventory/controller/product_services.dart';
 import 'package:yuvix/features/inventory/models/categorymodel.dart';
 
 import '../../screens/CategoryDetailPage.dart';
@@ -20,7 +22,8 @@ final CategoryModel cat;
       ),
       child: InkWell(
         onTap: (){
-          Navigator.push(context,MaterialPageRoute(builder: (context)=>CategoryDetailPage()));
+         
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>CategoryDetailPage(category:cat.categoryName!)));
         },
         child: Container(
           width: 160,
