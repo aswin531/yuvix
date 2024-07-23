@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yuvix/features/inventory/view/widgets/product/product_add.dart';
 
-import 'productadd.dart';
 
 class AddProductCard extends StatelessWidget {
   final title;

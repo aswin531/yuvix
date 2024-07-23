@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:yuvix/features/inventory/models/brandmodel.dart';
+import 'package:yuvix/features/inventory/models/brand_model.dart';
+
 
 
 import '../../../controller/brand_services.dart';

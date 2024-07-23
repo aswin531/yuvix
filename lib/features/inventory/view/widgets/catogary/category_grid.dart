@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yuvix/features/inventory/controller/category_Service.dart';
-import 'package:yuvix/features/inventory/models/categorymodel.dart';
 
-import 'categorycard.dart';
+
+import '../../../models/category_model.dart';
+import 'category_card.dart';
+
 
 
 class CategoryGridView extends StatelessWidget {

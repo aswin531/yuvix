@@ -2,20 +2,27 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:yuvix/features/inventory/view/widgets/brand/brandcard.dart';
+import 'package:yuvix/features/inventory/view/widgets/brand/brand_card.dart';
+
 import 'package:yuvix/features/inventory/view/widgets/product/other/build_section_header.dart';
 
 import 'package:provider/provider.dart'; 
 
-import 'package:yuvix/features/inventory/models/categorymodel.dart'; 
-import 'package:yuvix/features/inventory/models/brandmodel.dart';
+
+
 import '../../controller/brand_services.dart';
 import '../../controller/category_Service.dart';
-import '../widgets/brand/add_brand.dart';
-import '../widgets/brand/brandgrid.dart';
+import '../../models/brand_model.dart';
+import '../../models/category_model.dart';
+import '../widgets/brand/add_brand_card.dart';
+
+import '../widgets/brand/brand_grid.dart';
+
 import '../widgets/catogary/add_category_widget.dart';
-import '../widgets/catogary/categorycard.dart';
-import '../widgets/catogary/categorygrid.dart';
+import '../widgets/catogary/category_card.dart';
+import '../widgets/catogary/category_grid.dart';
+
+
 import '../widgets/product/add_product.dart'; 
 
 class InventoryPage extends StatelessWidget {
@@ -144,7 +151,7 @@ class InventoryPage extends StatelessWidget {
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) {
                                 final brand = snapshot.data![index];
-                                return brandCard(brand: brand,);
+                                return BrandCard(brand: brand,);
                               },
                             ),
                           );

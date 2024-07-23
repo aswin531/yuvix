@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'productmodel.g.dart';
+part 'product_model.g.dart';
 
 @HiveType(typeId: 3)
 class ProductModel {

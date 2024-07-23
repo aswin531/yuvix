@@ -2,9 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yuvix/features/inventory/controller/brand_services.dart';
+import 'package:yuvix/features/inventory/view/widgets/brand/brand_card.dart';
 
-import '../../../models/brandmodel.dart';
-import 'brandcard.dart';
+import '../../../models/brand_model.dart';
+
+
+
 
 class BrandGridView extends StatelessWidget {
   final List<BrandModel> categories;
@@ -37,7 +40,7 @@ class BrandGridView extends StatelessWidget {
           itemCount: snapshot.data!.length,
           itemBuilder: (context, index) {
              final brand = snapshot.data![index];
-            return brandCard(brand: brand);
+            return BrandCard(brand: brand);
           },
         );
         },
@@ -46,6 +49,8 @@ class BrandGridView extends StatelessWidget {
     );
   }
 }
+
+
 
 
 

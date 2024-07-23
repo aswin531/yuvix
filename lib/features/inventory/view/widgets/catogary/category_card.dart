@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 // import 'package:yuvix/features/inventory/controller/product_services.dart';
-import 'package:yuvix/features/inventory/models/categorymodel.dart';
 
-import '../../screens/CategoryDetailPage.dart';
+
+
+import '../../../models/category_model.dart';
+import '../../screens/category_details_page.dart';
  
 
 class CatCard extends StatelessWidget {

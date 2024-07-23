@@ -8,12 +8,13 @@ import 'package:yuvix/features/profile/view/screens/login.dart';
 import 'package:yuvix/features/profile/controller/auth_services.dart';
 import 'package:yuvix/features/inventory/controller/brand_services.dart';
 import 'package:yuvix/features/inventory/controller/category_Service.dart';
-import 'package:yuvix/features/inventory/models/brandmodel.dart';
-import 'package:yuvix/features/inventory/models/categorymodel.dart';
 
 import 'features/inventory/controller/product_services.dart';
 import 'features/homepage/widgets/bottom_nav.dart';
-import 'features/inventory/models/productmodel.dart';
+import 'features/inventory/models/brand_model.dart';
+
+import 'features/inventory/models/category_model.dart';
+import 'features/inventory/models/product_model.dart';
 import 'features/profile/controller/profile_service.dart';
 import 'features/profile/model/usermodel.dart';
 

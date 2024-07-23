@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:yuvix/features/inventory/models/brandmodel.dart';
+
 import 'package:yuvix/main.dart';
+
+import '../models/brand_model.dart';
 
 class BrandService extends ChangeNotifier {
    

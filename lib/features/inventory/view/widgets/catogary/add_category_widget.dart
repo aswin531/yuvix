@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yuvix/features/inventory/view/widgets/catogary/categoryadd.dart';
+
+
+import 'category_add.dart';
 
 class AddCategoryCard extends StatelessWidget {
   final title;

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/category_Service.dart';
-import '../../../models/categorymodel.dart';
+import '../../../models/category_model.dart';
+
 
 class AddCategory extends StatefulWidget {
   const AddCategory({Key? key}) : super(key: key);
