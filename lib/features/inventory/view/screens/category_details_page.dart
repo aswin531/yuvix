@@ -1,7 +1,110 @@
-import 'dart:io';
+
+// import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import '../../controller/product_full_details.dart';
+// import '../../controller/product_services.dart';
+// import '../widgets/product/product_show_card.dart';
+
+
+// class CategoryDetailPage extends StatelessWidget {
+//   final String category;
+
+//   CategoryDetailPage({required this.category});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final productService = Provider.of<ProductService>(context);
+//     productService.getProducts();
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Color(0xff03448c),
+//         title: Text('$category Products'),
+//       ),
+//       body: Consumer<ProductService>(builder: (context, value, child) {
+//         var filterProducts = value.productsMy.where((element) => element.category == category).toList();
+
+//         return GridView.builder(
+//           padding: EdgeInsets.all(6.0),
+//           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//             crossAxisCount: 2,
+//             crossAxisSpacing: 8.0,
+//             mainAxisSpacing: 8.0,
+//             childAspectRatio: 0.7,
+//           ),
+//           itemCount: filterProducts.length,
+//           itemBuilder: (context, index) {
+//             final product = filterProducts[index];
+
+//             return ProductShowCard(
+//               imageUrl: product.image ?? 'https://via.placeholder.com/150',
+//               productName: product.productName,
+//               color: product.color ?? 'Unknown Color',
+//               price: '₹${product.price.toStringAsFixed(2)}',
+//               onTap: () {
+//                 Navigator.push(
+//                   context,
+//                   MaterialPageRoute(
+//                     builder: (context) => ProductFullDetails(),
+//                   ),
+//                 );
+//               },
+//               onLongPress: () {
+//                 showModalBottomSheet(
+//                   context: context,
+//                   builder: (context) {
+//                     return Container(
+//                       padding: EdgeInsets.all(16.0),
+//                       child: Column(
+//                         mainAxisSize: MainAxisSize.min,
+//                         children: [
+//                           Text(
+//                             'Delete Product',
+//                             style: TextStyle(
+//                               fontSize: 18.0,
+//                               fontWeight: FontWeight.bold,
+//                             ),
+//                           ),
+//                           SizedBox(height: 16.0),
+//                           Text('Are you sure you want to delete this product?'),
+//                           SizedBox(height: 16.0),
+//                           Row(
+//                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                             children: [
+//                               ElevatedButton(
+//                                 onPressed: () {
+//                                   productService.deleteProduct(product.productId);
+//                                   Navigator.pop(context);
+//                                 },
+//                                 child: Text('Delete'),
+//                                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+//                               ),
+//                               ElevatedButton(
+//                                 onPressed: () {
+//                                   Navigator.pop(context);
+//                                 },
+//                                 child: Text('Cancel'),
+//                               ),
+//                             ],
+//                           ),
+//                         ],
+//                       ),
+//                     );
+//                   },
+//                 );
+//               },
+//             );
+//           },
+//         );
+//       }),
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controller/product_services.dart';
+import '../widgets/product/product_navigator.dart';
 
 class CategoryDetailPage extends StatelessWidget {
   final String category;
@@ -12,94 +115,33 @@ class CategoryDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final productService = Provider.of<ProductService>(context);
     productService.getProducts();
-    
+
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xff03448c),
-          title: Text('${category} Products'),
-        ),
-        body: Consumer<ProductService>(builder: (context, value, child) {
-          var filterProducts = value.productsMy.where((element) => element.category == category).toList();
-
-          return GridView.builder(
-              padding: EdgeInsets.all(8.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
-                childAspectRatio: 0.7,
-              ),
-              itemCount: filterProducts.length,
-              itemBuilder: (context, index) {
-                final product = filterProducts[index];
-
-                print("Product image: ${product.image}");
-                return ProductCard(
-                  imageUrl: product.image ?? 'https://via.placeholder.com/150',
-                  productName: product.productName,
-                  color: product.color ?? 'Unknown Color',
-                  price: '₹${product.price.toStringAsFixed(2)}',
-                );
-              });
-        }));
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  final String imageUrl;
-  final String productName;
-  final String color;
-  final String price;
-
-  const ProductCard({
-    required this.imageUrl,
-    required this.productName,
-    required this.color,
-    required this.price,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 3.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              Image.file(File(imageUrl),
-                  fit: BoxFit.cover, width: double.infinity, height: 100),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  productName,
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 4.0),
-                Text(color),
-                SizedBox(height: 4.0),
-                Row(
-                  children: [
-                    Text(
-                      price,
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange),
-                    ),
-                    SizedBox(width: 4.0),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        backgroundColor: Color(0xff03448c),
+        title: Text('$category Products'),
       ),
+      body: Consumer<ProductService>(builder: (context, value, child) {
+        var filterProducts = value.productsMy.where((element) => element.category == category).toList();
+
+        return GridView.builder(
+          padding: EdgeInsets.all(6.0),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 8.0,
+            mainAxisSpacing: 8.0,
+            childAspectRatio: 0.7,
+          ),
+          itemCount: filterProducts.length,
+          itemBuilder: (context, index) {
+            final product = filterProducts[index];
+
+            return ProductNavigator(product: product);
+          },
+        );
+      }),
     );
   }
 }
+
+

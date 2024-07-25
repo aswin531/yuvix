@@ -1,8 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:yuvix/features/inventory/view/widgets/product/product_textfeild.dart';
 
 class ConditionalFields extends StatelessWidget {
-  
   final String? selectedType;
   final TextEditingController ramController;
   final TextEditingController processorController;
@@ -33,138 +33,166 @@ class ConditionalFields extends StatelessWidget {
   Widget build(BuildContext context) {
     if (selectedType == null) return SizedBox.shrink();
 
-    if (selectedType == 'Mobiles' ||
-        selectedType == 'Smartphone' ||
-        selectedType == 'Tablet') {
-      return Column(
-        children: [
-          ProductTextFieldWidget(
-            type: false,
-            controller: ramController,
-            labelText: 'RAM',
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-            type: false,
-            controller: processorController,
-            labelText: 'Processor',
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-            controller: cameraController,
-            labelText: 'Camera',
-            type: false,
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-            controller: batteryController,
-            labelText: 'Battery',
-            type: false,
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-            type: false,
-            controller: storageController,
-            labelText: 'Storage',
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-            type: false,
-            controller: displaySizeController,
-            labelText: 'Display Size',
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-            type: false,
-            controller: networkConnectivityController,
-            labelText: 'Network Connectivity',
-          ),
-        ],
-      );
-    } else if (selectedType == 'Smartwatch') {
-      return Column(
-        children: [
-          ProductTextFieldWidget(
-            type: false,
-            controller: displaySizeController,
-            labelText: 'Display Size',
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-            type: false,
-            controller: batteryController,
-            labelText: 'Battery Life',
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-            type: false,
-            controller: compatibilityController,
-            labelText: 'Compatibility',
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-             type: false,
-            controller: featuresController,
-            labelText: 'Features',
-          ),
-        ],
-      );
-    } else if (selectedType == 'Accessories') {
-      return Column(
-        children: [
-          ProductTextFieldWidget(
-            type: false,
-            controller: compatibilityController,
-            labelText: 'Compatibility',
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-            type: false,
-            controller: materialController,
-            labelText: 'Material',
-          ),
-          SizedBox(height: 20),
-          ProductTextFieldWidget(
-            type: false,
-            controller: featuresController,
-            labelText: 'Features',
-          ),
-        ],
-      );
+    List<Widget> getFields() {
+      switch (selectedType) {
+        case 'Mobiles':
+        case 'Smartphone':
+        case 'Tablet':
+          return [
+            ProductTextFieldWidget(
+              type: false,
+              controller: ramController,
+              labelText: 'RAM',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: processorController,
+              labelText: 'Processor',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              controller: cameraController,
+              labelText: 'Camera',
+              type: false,
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              controller: batteryController,
+              labelText: 'Battery',
+              type: false,
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: storageController,
+              labelText: 'Storage',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: displaySizeController,
+              labelText: 'Display Size',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: networkConnectivityController,
+              labelText: 'Network Connectivity',
+            ),
+          ];
+        case 'Smartwatch':
+          return [
+            ProductTextFieldWidget(
+              type: false,
+              controller: displaySizeController,
+              labelText: 'Display Size',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: batteryController,
+              labelText: 'Battery Life',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: compatibilityController,
+              labelText: 'Compatibility',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: featuresController,
+              labelText: 'Features',
+            ),
+          ];
+        case 'Accessories':
+          return [
+            ProductTextFieldWidget(
+              type: false,
+              controller: compatibilityController,
+              labelText: 'Compatibility',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: materialController,
+              labelText: 'Material',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: featuresController,
+              labelText: 'Features',
+            ),
+          ];
+        default:
+          return [
+            ProductTextFieldWidget(
+              type: false,
+              controller: ramController,
+              labelText: 'RAM',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: processorController,
+              labelText: 'Processor',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              controller: cameraController,
+              labelText: 'Camera',
+              type: false,
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              controller: batteryController,
+              labelText: 'Battery',
+              type: false,
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: storageController,
+              labelText: 'Storage',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: displaySizeController,
+              labelText: 'Display Size',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: networkConnectivityController,
+              labelText: 'Network Connectivity',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: featuresController,
+              labelText: 'Features',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: compatibilityController,
+              labelText: 'Compatibility',
+            ),
+            SizedBox(height: 20),
+            ProductTextFieldWidget(
+              type: false,
+              controller: materialController,
+              labelText: 'Material',
+            ),
+          ];
+      }
     }
 
-    return Column(
-      children: [
-        ProductTextFieldWidget(
-          type: false,
-          controller: ramController,
-          labelText: 'RAM',
-        ),
-        SizedBox(height: 20),
-        ProductTextFieldWidget(
-          type: false,
-          controller: processorController,
-          labelText: 'Processor',
-        ),
-        SizedBox(height: 20),
-        ProductTextFieldWidget(
-          type: false,
-          controller: cameraController,
-          labelText: 'Camera',
-        ),
-        SizedBox(height: 20),
-        ProductTextFieldWidget(
-          type: false,
-          controller: batteryController,
-          labelText: 'Battery',
-        ),
-        SizedBox(height: 20),
-        ProductTextFieldWidget(
-          type: false,
-          controller: storageController,
-          labelText: 'Storage',
-        ),
-      ],
-    );
+    return Column(children: getFields());
   }
 }
+

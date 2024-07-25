@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 import '../models/product_model.dart';
-// import 'package:provider/provider.dart';
+
 
 
 class ProductService with ChangeNotifier {
@@ -25,14 +25,12 @@ class ProductService with ChangeNotifier {
   }
 
   getProducts() async {
-    // if (_productBox == null) {
-    //   await _initializeBox();
-    // }
     final productBox = await Hive.openBox<ProductModel>('products');
     log(productBox.values.toList().length.toString());
     productsMy = productBox.values.toList();
     log('enetred get products fn');
     log(productsMy.length.toString());
+    notifyListeners();
   }
 
   Future<void> addProduct(ProductModel product) async {
@@ -42,13 +40,24 @@ class ProductService with ChangeNotifier {
     log(_products.length.toString());
     notifyListeners();
   }
-
-  Future<void> deleteProduct(String productId) async {
+  
+  Future<void> deleteProduct(int productId) async {
     if (_productBox == null) return;
-    await _productBox!.delete(productId);
-    _products = _productBox!.values.toList();
-    notifyListeners();
+    final productKey = _productBox!.keys.firstWhere(
+      (key) => _productBox!.get(key)!.productId == productId,
+      orElse: () => null,
+    );
+
+    if (productKey != null) {
+      await _productBox!.delete(productKey);
+      _products = _productBox!.values.toList();
+      notifyListeners();
+    } else {
+      log('Product not found');
+    }
+  notifyListeners();
   }
+ 
 
   Future<void> updateProduct(ProductModel product) async {
     if (_productBox == null) return;
