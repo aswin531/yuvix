@@ -59,11 +59,24 @@ class ProductService with ChangeNotifier {
   }
  
 
-  Future<void> updateProduct(ProductModel product) async {
-    if (_productBox == null) return;
-    await _productBox!.put(product.productId, product);
-    _products = _productBox!.values.toList();
-    notifyListeners();
-  }
+  // Future<void> updateProduct(ProductModel product) async {
+  //   if (_productBox == null) return;
+  //   await _productBox!.put(product.productId, product);
+  //   _products = _productBox!.values.toList();
+  //   notifyListeners();
+  // }
+ Future<void> updateProduct(ProductModel product) async {
+  if (_productBox == null) return;
+
+  
+  await _productBox!.put(product.productId, product);
+
+  _products = _productBox!.values.toList();
+  notifyListeners();
 }
+
+
+ 
+}
+
 

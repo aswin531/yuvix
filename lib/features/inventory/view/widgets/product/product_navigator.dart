@@ -25,7 +25,7 @@ class ProductNavigator extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MobilesPage(),
+              builder: (context) => MobilesFullDetailsPage(product:product),
             ),
           );
         } else if (product.category == 'Smartwatch') {
