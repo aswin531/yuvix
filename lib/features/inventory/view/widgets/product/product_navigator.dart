@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:yuvix/features/inventory/view/screens/other_full_details.dart';
 import 'package:yuvix/features/inventory/view/widgets/product/product_show_card.dart';
-import '../../../controller/product_full_details.dart';
+
 import '../../../controller/product_services.dart';
 import '../../../models/product_model.dart';
 import '../../screens/accessories_page.dart';
@@ -32,21 +33,21 @@ class ProductNavigator extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SmartwatchPage(),
+              builder: (context) => SmartwatchPage(product: product,),
             ),
           );
         } else if (product.category == 'Accessories') {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AccessoriesPage(),
+              builder: (context) => AccessoriesPage(product: product,),
             ),
           );
         } else {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ProductFullDetails(),
+              builder: (context) => OtherFullDetails(product: product,),
             ),
           );
         }

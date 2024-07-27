@@ -37,7 +37,7 @@ class ProductModel {
   @HiveField(15)
   final String? features;
   @HiveField(16)
-  final int quantity;
+  final int?quantity;
   @HiveField(17)
   final double price;
 
@@ -58,7 +58,7 @@ class ProductModel {
     this.compatibility,
     this.material,
     this.features,
-    required this.quantity,
+    this.quantity,
     required this.price, 
   });
 }

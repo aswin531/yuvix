@@ -33,7 +33,7 @@ class ProductModelAdapter extends TypeAdapter<ProductModel> {
       compatibility: fields[13] as String?,
       material: fields[14] as String?,
       features: fields[15] as String?,
-      quantity: fields[16] as int,
+      quantity: fields[16] as int?,
       price: fields[17] as double,
     );
   }

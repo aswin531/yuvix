@@ -5,10 +5,10 @@ import '../../models/product_model.dart';
 import '../widgets/mobiles/edit_dialogue.dart';
 
 
-class SmartwatchPage extends StatelessWidget {
+class OtherFullDetails extends StatelessWidget {
   final ProductModel product;
 
-  SmartwatchPage({required this.product});
+  OtherFullDetails({required this.product});
 
   @override
   Widget build(BuildContext context) {

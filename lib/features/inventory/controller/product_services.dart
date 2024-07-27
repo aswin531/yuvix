@@ -26,10 +26,10 @@ class ProductService with ChangeNotifier {
 
   getProducts() async {
     final productBox = await Hive.openBox<ProductModel>('products');
-    log(productBox.values.toList().length.toString());
+    // log(productBox.values.toList().length.toString());
     productsMy = productBox.values.toList();
-    log('enetred get products fn');
-    log(productsMy.length.toString());
+    // log('enetred get products fn');
+    // log(productsMy.length.toString());
     notifyListeners();
   }
 
@@ -68,10 +68,15 @@ class ProductService with ChangeNotifier {
  Future<void> updateProduct(ProductModel product) async {
   if (_productBox == null) return;
 
-  
-  await _productBox!.put(product.productId, product);
-
-  _products = _productBox!.values.toList();
+    final productBox = await Hive.openBox<ProductModel>('products');
+   final index = productBox.values.toList().indexWhere((value) => value.productId == product.productId);
+   final fetchedProduct=productBox.getAt(index);
+   log('this is index>>>>>>>>>>>>>>${index}');
+   log('this is product id${product.productId}');
+   log('this is fetched product>>>>${fetchedProduct!.productName}');
+   productBox.putAt(index, product);
+     
+  // _products = _productBox!.values.toList();
   notifyListeners();
 }
 
