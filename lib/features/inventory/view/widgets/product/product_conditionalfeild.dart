@@ -40,9 +40,9 @@ class ConditionalFields extends StatelessWidget {
         case 'Tablet':
           return [
             ProductTextFieldWidget(
-              type: false,
+              type: true,
               controller: ramController,
-              labelText: 'RAM',
+              labelText: 'RAM (GB)',
             ),
             SizedBox(height: 20),
             ProductTextFieldWidget(
@@ -59,14 +59,14 @@ class ConditionalFields extends StatelessWidget {
             SizedBox(height: 20),
             ProductTextFieldWidget(
               controller: batteryController,
-              labelText: 'Battery',
+              labelText: 'Battery(mAh)',
               type: false,
             ),
             SizedBox(height: 20),
             ProductTextFieldWidget(
-              type: false,
+              type: true,
               controller: storageController,
-              labelText: 'Storage',
+              labelText: 'Storage (GB)',
             ),
             SizedBox(height: 20),
             ProductTextFieldWidget(
@@ -90,9 +90,9 @@ class ConditionalFields extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ProductTextFieldWidget(
-              type: false,
+              type: true,
               controller: batteryController,
-              labelText: 'Battery Life',
+              labelText: 'Battery Life(mAh)',
             ),
             SizedBox(height: 20),
             ProductTextFieldWidget(
@@ -130,9 +130,9 @@ class ConditionalFields extends StatelessWidget {
         default:
           return [
             ProductTextFieldWidget(
-              type: false,
+              type: true,
               controller: ramController,
-              labelText: 'RAM',
+              labelText: 'RAM (GB)',
             ),
             SizedBox(height: 20),
             ProductTextFieldWidget(
@@ -149,14 +149,14 @@ class ConditionalFields extends StatelessWidget {
             SizedBox(height: 20),
             ProductTextFieldWidget(
               controller: batteryController,
-              labelText: 'Battery',
+              labelText: 'Battery(mAh)',
               type: false,
             ),
             SizedBox(height: 20),
             ProductTextFieldWidget(
-              type: false,
+              type: true,
               controller: storageController,
-              labelText: 'Storage',
+              labelText: 'Storage (GB)',
             ),
             SizedBox(height: 20),
             ProductTextFieldWidget(

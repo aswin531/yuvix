@@ -4,14 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:yuvix/features/inventory/controller/brand_services.dart';
 import 'package:yuvix/features/inventory/view/widgets/brand/brand_card.dart';
 
-import '../../../models/brand_model.dart';
+
 
 
 
 
 class BrandGridView extends StatelessWidget {
-  final List<BrandModel> categories;
-   BrandGridView({super.key, required this.categories});
+  
+   BrandGridView({super.key, });
  
  
   @override

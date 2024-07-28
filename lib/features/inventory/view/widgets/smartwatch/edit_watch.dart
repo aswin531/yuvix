@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/product_services.dart';
 import '../../../models/product_model.dart';
+import '../mobiles/edit.dart';
 
 
 class EditProductDialog extends StatelessWidget {
@@ -15,34 +16,33 @@ class EditProductDialog extends StatelessWidget {
     final _priceController = TextEditingController(text: product.price.toString());
     final _categoryController = TextEditingController(text: product.category);
     final _colorController = TextEditingController(text: product.color);
-    final _ramController = TextEditingController(text: product.ram.toString());
-    final _processorController = TextEditingController(text: product.processor);
-    final _cameraController = TextEditingController(text: product.camera);
     final _batteryController = TextEditingController(text: product.battery.toString());
-    final _storageController = TextEditingController(text: product.storage.toString());
     // final _quantityController = TextEditingController(text: product.quantity.toString());
     final _brandController = TextEditingController(text: product.brand);
     final _displayController = TextEditingController(text: product.displaySize);
-    final _networkController = TextEditingController(text: product.networkConnectivity);
+    final _compatibilityController= TextEditingController(text: product.compatibility);
+    final _featuresController= TextEditingController(text: product.features);
+
 
     return AlertDialog(
       title: Text('Edit Product'),
       content: SingleChildScrollView(
         child: Column(
           children: [
-            _buildTextField(_nameController, 'Product Name'),
-            _buildTextField(_priceController, 'Price', TextInputType.number),
-            _buildTextField(_categoryController, 'Category'),
-            _buildTextField(_colorController, 'Color'),
-            _buildTextField(_ramController, 'RAM (GB)', TextInputType.number),
-            _buildTextField(_processorController, 'Processor'),
-            _buildTextField(_cameraController, 'Camera'),
-            _buildTextField(_batteryController, 'Battery (mAh)', TextInputType.number),
-            _buildTextField(_storageController, 'Storage (GB)', TextInputType.number),
+            EditTextField(controller:_nameController, label: 'Product Name'),
+            
+            EditTextField(controller:_categoryController, label:'Category'),
+            EditTextField(controller:_brandController, label:'Brand'),
+            EditTextField(controller:_displayController, label:'Display Size'),
+            EditTextField(controller:_batteryController, label:'Battery Life (mAh)', keyboardType:TextInputType.number),
+            EditTextField(controller:_compatibilityController, label:'Compatibility'),
+            EditTextField(controller:_colorController, label:'Color'),
+            EditTextField(controller:_featuresController, label:'Features'),
+            EditTextField(controller:_priceController, label:'Price', keyboardType:TextInputType.number),
+           
+           
             // _buildTextField(_quantityController, 'Quantity', TextInputType.number),
-            _buildTextField(_brandController, 'Brand'),
-            _buildTextField(_displayController, 'Display Size'),
-            _buildTextField(_networkController, 'Network Connectivity'),
+           
           ],
         ),
       ),
@@ -57,13 +57,6 @@ class EditProductDialog extends StatelessWidget {
               image: product.image,
               displaySize: _displayController.text,
               battery: _batteryController.text,
-              ram: _ramController.text,
-              processor: _processorController.text,
-              camera: _cameraController.text,
-              
-              storage: _storageController.text,
-              
-              networkConnectivity: _networkController.text,
               // quantity: int.parse(_quantityController.text),
               color: _colorController.text,
               price: double.parse(_priceController.text),
@@ -86,11 +79,4 @@ class EditProductDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, [TextInputType keyboardType = TextInputType.text]) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(labelText: label),
-      keyboardType: keyboardType,
-    );
-  }
 }

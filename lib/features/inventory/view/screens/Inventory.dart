@@ -96,7 +96,7 @@ class InventoryPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                      BuildSectionHeaderWidget(title: "Category",onSeeMore: () {
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => CategoryGridView(categories: [],),));
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => CategoryGridView(),));
                     },),
                     SizedBox(height: 10),
 
@@ -131,7 +131,7 @@ class InventoryPage extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     BuildSectionHeaderWidget(title: "Brand",onSeeMore: () {
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => BrandGridView(categories: []),));
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => BrandGridView(),));
                     },),
                     SizedBox(height: 10),
                     FutureBuilder<List<BrandModel>>(

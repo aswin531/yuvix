@@ -33,6 +33,11 @@ class OtherDetails extends StatelessWidget {
         ProductDetailRow(label: 'Network Connectivity', value:'${product.networkConnectivity}'),
         ProductDetailRow(label: 'Color', value: product.color ?? 'Unknown Color'),
          ProductDetailRow(label: 'Display Size', value:'${product.displaySize}'),
+         ProductDetailRow(label: 'Camera', value: '${product.material}'),
+        ProductDetailRow(label: 'Battery', value: '${product.features} mAh'),
+        ProductDetailRow(label: 'Color', value: product.color ?? 'Unknown Color'),
+        ProductDetailRow(label: 'Price', value: '₹${product.price.toStringAsFixed(2)}'),
+        
         // ProductDetailRow(label: 'Quantity', value: '${product.quantity}'),
         ProductDetailRow(label: 'Price', value: '₹${product.price.toStringAsFixed(2)}'),
       ],

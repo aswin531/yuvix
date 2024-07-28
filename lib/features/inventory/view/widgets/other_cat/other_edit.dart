@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/product_services.dart';
 import '../../../models/product_model.dart';
+import '../mobiles/edit.dart';
 
 
 class EditProductDialog extends StatelessWidget {
@@ -30,19 +31,24 @@ class EditProductDialog extends StatelessWidget {
       content: SingleChildScrollView(
         child: Column(
           children: [
-            _buildTextField(_nameController, 'Product Name'),
-            _buildTextField(_priceController, 'Price', TextInputType.number),
-            _buildTextField(_categoryController, 'Category'),
-            _buildTextField(_colorController, 'Color'),
-            _buildTextField(_ramController, 'RAM (GB)', TextInputType.number),
-            _buildTextField(_processorController, 'Processor'),
-            _buildTextField(_cameraController, 'Camera'),
-            _buildTextField(_batteryController, 'Battery (mAh)', TextInputType.number),
-            _buildTextField(_storageController, 'Storage (GB)', TextInputType.number),
-            // _buildTextField(_quantityController, 'Quantity', TextInputType.number),
-            _buildTextField(_brandController, 'Brand'),
-            _buildTextField(_displayController, 'Display Size'),
-            _buildTextField(_networkController, 'Network Connectivity'),
+           EditTextField(controller:_nameController,label: 'Product Name'),
+           EditTextField(controller:_priceController, label: 'Price', keyboardType:TextInputType.number),
+           EditTextField(controller:_categoryController, label: 'Category'),
+           EditTextField(controller:_colorController, label: 'Color'),
+           EditTextField(controller:_ramController, label: 'RAM (GB)', keyboardType:TextInputType.number),
+           EditTextField(controller:_processorController, label: 'Processor'),
+           EditTextField(controller:_cameraController, label: 'Camera'),
+           EditTextField(controller:_batteryController, label: 'Battery (mAh)',keyboardType: TextInputType.number),
+           EditTextField(controller:_storageController, label: 'Storage (GB)', keyboardType:TextInputType.number),
+            //EditTextField(_quantityController, 'Quantity', TextInputType.number),
+           EditTextField(controller:_brandController, label:'Brand'),
+           EditTextField(controller:_displayController, label:'Display Size'),
+           EditTextField(controller:_networkController, label: 'Network Connectivity'),
+            EditTextField(controller:_colorController, label: 'Compatibility'),
+           EditTextField(controller:_ramController,label:  'Material'),
+           EditTextField(controller:_processorController, label: 'Features'),
+           EditTextField(controller:_cameraController, label: 'Color'),
+           EditTextField(controller:_batteryController,label: 'Price', keyboardType:TextInputType.number),
           ],
         ),
       ),
@@ -84,11 +90,4 @@ class EditProductDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, [TextInputType keyboardType = TextInputType.text]) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(labelText: label),
-      keyboardType: keyboardType,
-    );
-  }
 }

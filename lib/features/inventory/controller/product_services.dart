@@ -1,18 +1,16 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-
 import '../models/product_model.dart';
-
-
 
 class ProductService with ChangeNotifier {
   Box<ProductModel>? _productBox;
 
   List<ProductModel> _products = [];
   List<ProductModel> productsMy = [];
+  List<ProductModel> _searchResults = [];
   List<ProductModel> get products => _products;
+  List<ProductModel> get searchResults => _searchResults; 
 
   ProductService() {
     _initializeBox();
@@ -24,12 +22,9 @@ class ProductService with ChangeNotifier {
     notifyListeners();
   }
 
-  getProducts() async {
+  Future<void> getProducts() async {
     final productBox = await Hive.openBox<ProductModel>('products');
-    // log(productBox.values.toList().length.toString());
     productsMy = productBox.values.toList();
-    // log('enetred get products fn');
-    // log(productsMy.length.toString());
     notifyListeners();
   }
 
@@ -37,7 +32,6 @@ class ProductService with ChangeNotifier {
     if (_productBox == null) return;
     await _productBox!.add(product);
     _products = _productBox!.values.toList();
-    log(_products.length.toString());
     notifyListeners();
   }
   
@@ -55,33 +49,28 @@ class ProductService with ChangeNotifier {
     } else {
       log('Product not found');
     }
-  notifyListeners();
   }
- 
 
-  // Future<void> updateProduct(ProductModel product) async {
-  //   if (_productBox == null) return;
-  //   await _productBox!.put(product.productId, product);
-  //   _products = _productBox!.values.toList();
-  //   notifyListeners();
-  // }
- Future<void> updateProduct(ProductModel product) async {
-  if (_productBox == null) return;
-
+  Future<void> updateProduct(ProductModel product) async {
+    if (_productBox == null) return;
     final productBox = await Hive.openBox<ProductModel>('products');
-   final index = productBox.values.toList().indexWhere((value) => value.productId == product.productId);
-   final fetchedProduct=productBox.getAt(index);
-   log('this is index>>>>>>>>>>>>>>${index}');
-   log('this is product id${product.productId}');
-   log('this is fetched product>>>>${fetchedProduct!.productName}');
-   productBox.putAt(index, product);
-     
-  // _products = _productBox!.values.toList();
-  notifyListeners();
+    final index = productBox.values.toList().indexWhere((value) => value.productId == product.productId);
+    if (index != -1) {
+      productBox.putAt(index, product);
+      _products = productBox.values.toList();
+      notifyListeners();
+    }
+  }
+
+  void searchProducts(String query) {
+    if (query.isEmpty) {
+      _searchResults = [];
+    } else {
+      _searchResults = _products
+          .where((product) => product.productName.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+    notifyListeners();
+  }
 }
-
-
- 
-}
-
-
+    
