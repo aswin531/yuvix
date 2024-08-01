@@ -21,7 +21,7 @@ class EditProductDialog extends StatelessWidget {
     final _cameraController = TextEditingController(text: product.camera);
     final _batteryController = TextEditingController(text: product.battery.toString());
     final _storageController = TextEditingController(text: product.storage.toString());
-    // final _quantityController = TextEditingController(text: product.quantity.toString());
+    final _quantityController = TextEditingController(text: product.quantity.toString());
     final _brandController = TextEditingController(text: product.brand);
     final _displayController = TextEditingController(text: product.displaySize);
     final _networkController = TextEditingController(text: product.networkConnectivity);
@@ -40,7 +40,7 @@ class EditProductDialog extends StatelessWidget {
            EditTextField(controller:_cameraController, label: 'Camera'),
            EditTextField(controller:_batteryController, label: 'Battery (mAh)',keyboardType: TextInputType.number),
            EditTextField(controller:_storageController, label: 'Storage (GB)', keyboardType:TextInputType.number),
-            //EditTextField(_quantityController, 'Quantity', TextInputType.number),
+           EditTextField(controller: _quantityController, label: 'Quantity', keyboardType:TextInputType.number),
            EditTextField(controller:_brandController, label:'Brand'),
            EditTextField(controller:_displayController, label:'Display Size'),
            EditTextField(controller:_networkController, label: 'Network Connectivity'),
@@ -68,7 +68,7 @@ class EditProductDialog extends StatelessWidget {
               storage: _storageController.text,
               displaySize: _displayController.text,
               networkConnectivity: _networkController.text,
-              // quantity: int.parse(_quantityController.text),
+              quantity: int.parse(_quantityController.text),
               color: _colorController.text,
               price: double.parse(_priceController.text),
             );

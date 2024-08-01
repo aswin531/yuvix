@@ -1,7 +1,8 @@
     import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yuvix/features/profile/model/usermodel.dart';
+
+import '../model/user_model.dart';
 
 class AuthService with ChangeNotifier{
   Box<UserModel>? _userBox;

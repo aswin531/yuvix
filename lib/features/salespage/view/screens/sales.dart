@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yuvix/features/sales_page/view/widget/sale_card.dart';
+
+
+import '../widget/sale_card.dart';
 import 'sale_more.dart';
 import 'sales_add_sheet.dart';
 

@@ -1,7 +1,8 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
-import '../model/profilemodel.dart';
+
+import '../model/profile_model.dart';
 
 class ProfileService with ChangeNotifier {
   ProfileModel _profile = ProfileModel(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:yuvix/features/inventory/view/widgets/mobiles/product_details.dart';
 import '../../models/product_model.dart';
 import '../widgets/mobiles/edit_dialogue.dart';
+import '../widgets/smartwatch/product_watch.dart';
 
 
 class SmartwatchPage extends StatelessWidget {
@@ -25,7 +25,7 @@ class SmartwatchPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: MobileProductDetails(product: product),
+          child: WatchProductDetails(product: product),
         ),
       ),
     );

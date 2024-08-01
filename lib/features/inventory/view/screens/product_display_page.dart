@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 import '../../controller/product_services.dart';
 import '../widgets/product/product_navigator.dart';
 
-class CategoryDetailPage extends StatelessWidget {
+class ProductDisplayPage extends StatelessWidget {
   final String category;
 
-  CategoryDetailPage({required this.category});
+ ProductDisplayPage({required this.category});
 
   @override
   Widget build(BuildContext context) {

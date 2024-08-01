@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:yuvix/features/profile/model/usermodel.dart';
 import 'package:yuvix/features/profile/controller/auth_services.dart';
+
+import '../../model/user_model.dart';
 
 class RegScreen extends StatefulWidget {
   const RegScreen({Key? key}) : super(key: key);

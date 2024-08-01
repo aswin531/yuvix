@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/octicons_icons.dart';
-import '../../inventory/view/screens/Inventory.dart';
-import '../../profile/view/Screens/profile.dart';
+import 'package:yuvix/features/homepage/view/screen/search_filter.dart';
+import 'package:yuvix/features/profile/view/Screens/profile.dart';
+import 'package:yuvix/features/revenue/view/screen/revenue.dart';
+import 'package:yuvix/features/salespage/view/screens/sales.dart';
+
+import '../../../inventory/view/screens/Inventory.dart';
 
 
-import '../../sales_page/view/screens/sales.dart';
-import 'search.dart';
 
 const Color BackgroundColor = Color(0xff03448c);
 
@@ -54,9 +56,9 @@ class _BottomNavState extends State<BottomNav> {
         physics: NeverScrollableScrollPhysics(),
         children:  [
           InventoryPage(),
-          Search(),
+          SearchPage(),
           SalesPage(),
-          // ExpensePage(),
+          RevenuePage(),
           ProfilePage(),
         ],
         onPageChanged: (index) {
@@ -83,10 +85,10 @@ class _BottomNavState extends State<BottomNav> {
             icon: Icon(FontAwesome5.hands_helping, color: Colors.white),
             title: Text('Sales', style: TextStyle(color: Colors.white)),
           ),
-          // FlashyTabBarItem(
-          //   icon: Icon(FontAwesome5.chart_bar, color: Colors.white),
-          //   title: Text('Expense', style: TextStyle(color: Colors.white)),
-          // ),
+          FlashyTabBarItem(
+            icon: Icon(FontAwesome5.chart_bar, color: Colors.white),
+            title: Text('Revenue', style: TextStyle(color: Colors.white)),
+          ),
           FlashyTabBarItem(
             icon: Icon(Octicons.person, color: Colors.white),
             title: Text('Profile', style: TextStyle(color: Colors.white)),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import '../../controller/sales_service.dart';
 
 class SalesAddPage extends StatefulWidget {
   @override
@@ -24,40 +25,112 @@ class _SalesAddPageState extends State<SalesAddPage> {
     super.initState();
     _dateController.text = DateTime.now().toString().split(' ')[0];
   }
+void _selectProduct() {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      String selectedCategory = '';
+      TextEditingController quantityController = TextEditingController();
+      TextEditingController searchController = TextEditingController();
+      List<Map<String, dynamic>> filteredProducts = [];
 
-  void _selectProduct() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              TextField(
-                decoration: InputDecoration(labelText: 'Search Product'),
-              ),
-              // Dummy product list
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _products.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(_products[index]['name']),
-                      subtitle: Text('Price: \$${_products[index]['amount']}'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        setState(() {
-                          // Update product selection logic
-                        });
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+      void filterProducts() {
+        setState(() {
+          filteredProducts = _products.where((product) {
+            final categoryMatch = product['category'] == selectedCategory;
+            final nameMatch = product['name']
+                .toLowerCase()
+                .contains(searchController.text.toLowerCase());
+            return categoryMatch && nameMatch;
+          }).toList();
+        });
+      }
+
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DropdownButtonFormField<String>(
+              value: selectedCategory.isEmpty ? null : selectedCategory,
+              onChanged: (newValue) {
+                setState(() {
+                  selectedCategory = newValue!;
+                  searchController.clear();
+                  filteredProducts = _products
+                      .where((product) => product['category'] == selectedCategory)
+                      .toList();
+                });
+              },
+              items: <String>['Category 1', 'Category 2', 'Category 3']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              decoration: InputDecoration(labelText: 'Select Category'),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              controller: searchController,
+              decoration: InputDecoration(labelText: 'Search Product'),
+              onChanged: (value) => filterProducts(),
+              enabled: selectedCategory.isNotEmpty,
+            ),
+            SizedBox(height: 10),
+            TextField(
+              controller: quantityController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: 'Quantity'),
+              enabled: selectedCategory.isNotEmpty,
+            ),
+            SizedBox(height: 10),
+             TextField(
+              controller: _priceController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: 'Price'),
+              enabled: selectedCategory.isNotEmpty,
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+
+  void _saveSales(BuildContext context) {
+    final date = _dateController.text;
+    final customerName = _customerNameController.text;
+    final mobileNumber = _mobileNumberController.text;
+    final productName = _productController.text;
+    final quantity = int.tryParse(_quantityController.text) ?? 0;
+    final pricePerUnit = double.tryParse(_priceController.text) ?? 0.0;
+
+    if (date.isEmpty ||
+        customerName.isEmpty ||
+        mobileNumber.isEmpty ||
+        productName.isEmpty ||
+        quantity <= 0 ||
+        pricePerUnit <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill all the fields correctly')),
+      );
+      return;
+    }
+
+    Provider.of<SalesProvider>(context, listen: false).saveSales(
+      date: date,
+      customerName: customerName,
+      mobileNumber: mobileNumber,
+      productName: productName,
+      quantity: quantity,
+      pricePerUnit: pricePerUnit,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Sales details saved successfully')),
     );
   }
 
@@ -124,42 +197,21 @@ class _SalesAddPageState extends State<SalesAddPage> {
                 ),
               ),
               SizedBox(height: 5.0),
-              TextFormField(
-                controller: _quantityController,
-                decoration: InputDecoration(
-                  labelText: 'Quantity',
-                ),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 5.0),
-              TextFormField(
-                controller: _priceController,
-                decoration: InputDecoration(
-                  labelText: 'Price',
-                ),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-              ),
-              SizedBox(height: 5.0),
               
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                     
-                    },
+                    onPressed: () {},
                     child: Text('Add Product'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      
-                    },
+                    onPressed: () => _saveSales(context),
                     child: Text('Save'),
                   ),
                 ],
               ),
               SizedBox(height: 8.0),
-              
               Text('User Name: John Doe'),
               Text('Mobile Number: 123-456-7890'),
               SizedBox(height: 8.0),
@@ -180,14 +232,11 @@ class _SalesAddPageState extends State<SalesAddPage> {
                 ],
               ),
               SizedBox(height: 8.0),
-             
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      
-                    },
+                    onPressed: () {},
                     child: Text('Submit'),
                   ),
                   ElevatedButton(

@@ -17,7 +17,7 @@ class EditProductDialog extends StatelessWidget {
     final _categoryController = TextEditingController(text: product.category);
     final _colorController = TextEditingController(text: product.color);
     final _batteryController = TextEditingController(text: product.battery.toString());
-    // final _quantityController = TextEditingController(text: product.quantity.toString());
+    final _quantityController = TextEditingController(text: product.quantity.toString());
     final _brandController = TextEditingController(text: product.brand);
     final _displayController = TextEditingController(text: product.displaySize);
     final _compatibilityController= TextEditingController(text: product.compatibility);
@@ -39,9 +39,7 @@ class EditProductDialog extends StatelessWidget {
             EditTextField(controller:_colorController, label:'Color'),
             EditTextField(controller:_featuresController, label:'Features'),
             EditTextField(controller:_priceController, label:'Price', keyboardType:TextInputType.number),
-           
-           
-            // _buildTextField(_quantityController, 'Quantity', TextInputType.number),
+            EditTextField(controller:_quantityController, label:'Quantity', keyboardType:TextInputType.number),
            
           ],
         ),
@@ -57,7 +55,7 @@ class EditProductDialog extends StatelessWidget {
               image: product.image,
               displaySize: _displayController.text,
               battery: _batteryController.text,
-              // quantity: int.parse(_quantityController.text),
+              quantity: int.parse(_quantityController.text),
               color: _colorController.text,
               price: double.parse(_priceController.text),
             );

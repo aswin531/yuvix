@@ -7,10 +7,10 @@ import '../mobiles/product_detail_row.dart';
 
 
 
-class MobileProductDetails extends StatelessWidget {
+class AccessoriesProductDetails extends StatelessWidget {
   final ProductModel product;
 
-  MobileProductDetails({required this.product});
+  AccessoriesProductDetails({required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,9 @@ class MobileProductDetails extends StatelessWidget {
         ProductDetailRow(label: 'Product Name', value: product.productName),
         ProductDetailRow(label: 'Category', value: product.category),
         ProductDetailRow(label: 'Brand', value: product.brand),
-        ProductDetailRow(label: 'Compatibility', value: 'product.compatibility'),
-        ProductDetailRow(label: 'Material', value: 'product.material'),
-        ProductDetailRow(label: 'Features', value: 'product.features'),
+        ProductDetailRow(label: 'Compatibility', value: '${product.compatibility}'),
+        ProductDetailRow(label: 'Material', value: '${product.material}'),
+        ProductDetailRow(label: 'Features', value: '${product.features}'),
         ProductDetailRow(label: 'Color', value: product.color ?? 'Unknown Color'),
         ProductDetailRow(label: 'Price', value: '₹${product.price.toStringAsFixed(2)}'),
       ],

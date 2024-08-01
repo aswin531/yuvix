@@ -17,8 +17,7 @@ class EditAccessories extends StatelessWidget {
     final _categoryController = TextEditingController(text: product.category);
     final _colorController = TextEditingController(text: product.color);
     final _compatibilityController = TextEditingController(text: product.compatibility);
-   
-    // final _quantityController = TextEditingController(text: product.quantity.toString());
+    final _quantityController = TextEditingController(text: product.quantity.toString());
     final _brandController = TextEditingController(text: product.brand);
     final _materialController = TextEditingController(text: product.material);
     final _featuresController = TextEditingController(text: product.features);
@@ -52,7 +51,7 @@ class EditAccessories extends StatelessWidget {
               brand: _brandController.text,
               image: product.image,
               category: _categoryController.text,
-              // quantity: int.parse(_quantityController.text),
+             quantity: int.parse(_quantityController.text),
               color: _colorController.text,
               price: double.parse(_priceController.text),
             );

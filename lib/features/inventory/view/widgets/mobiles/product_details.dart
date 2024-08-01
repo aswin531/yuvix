@@ -35,7 +35,8 @@ class MobileProductDetails extends StatelessWidget {
          ProductDetailRow(label: 'Display Size', value:'${product.displaySize}'),
         ProductDetailRow(label: 'Network Connectivity', value:'${product.networkConnectivity}'),
         ProductDetailRow(label: 'Color', value: product.color ?? 'Unknown Color'),
-        // ProductDetailRow(label: 'Quantity', value: '${product.quantity}'),
+
+        ProductDetailRow(label: 'Quantity', value: '${product.quantity}'),
         ProductDetailRow(label: 'Price', value: '₹${product.price.toStringAsFixed(2)}'),
       ],
     );

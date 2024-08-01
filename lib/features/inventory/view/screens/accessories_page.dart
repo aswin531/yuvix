@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:yuvix/features/inventory/view/widgets/mobiles/product_details.dart';
+import 'package:yuvix/features/inventory/view/widgets/accessories/accessories_details.dart';
 import '../../models/product_model.dart';
 import '../widgets/mobiles/edit_dialogue.dart';
 
@@ -25,7 +25,7 @@ class AccessoriesPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: MobileProductDetails(product: product),
+          child: AccessoriesProductDetails(product: product),
         ),
       ),
     );

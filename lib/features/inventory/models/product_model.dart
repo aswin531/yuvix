@@ -58,7 +58,7 @@ class ProductModel {
     this.compatibility,
     this.material,
     this.features,
-    this.quantity,
+    required this.quantity,
     required this.price, 
   });
 }
