@@ -59,6 +59,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => ProductService()),
       ChangeNotifierProvider(create: (_) => ProfileService()),
       ChangeNotifierProvider(create: (_) => SalesProvider()),
+      
     ],
     child: const YuvixApp(),
   ));

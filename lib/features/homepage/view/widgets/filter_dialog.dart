@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:yuvix/features/inventory/controller/product_services.dart';
 import 'package:yuvix/features/homepage/view/screen/filter_display.dart';
-import '../../../inventory/controller/product_services.dart';
-
 
 class FilterDialog extends StatefulWidget {
   @override
@@ -106,3 +105,4 @@ class _FilterOptionState extends State<FilterOption> {
     );
   }
 }
+
