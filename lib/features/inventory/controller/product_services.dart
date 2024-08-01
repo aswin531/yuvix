@@ -81,8 +81,11 @@ class ProductService with ChangeNotifier {
   void filterProducts(Map<String, List<String>> filters) {
   List<ProductModel> filteredProducts = _products; 
 
-  // Apply price filters
-  if (filters.containsKey('Price')) {
+  bool hasPriceFilter = filters.containsKey('Price');
+  bool hasColorFilter = filters.containsKey('Color');
+
+  // Apply Price Filter if it exists
+  if (hasPriceFilter) {
     List<String> priceFilters = filters['Price']!;
     filteredProducts = filteredProducts.where((product) {
       double price = product.price;
@@ -96,8 +99,8 @@ class ProductService with ChangeNotifier {
     print('After Price Filter: ${filteredProducts.length}');
   }
 
-  // Apply color filters
-  if (filters.containsKey('Color')) { 
+  // Apply Color Filter if it exists
+  if (hasColorFilter) { 
     List<String> colorFilters = filters['Color']!;
     filteredProducts = filteredProducts.where((product) {
       bool colorMatch = colorFilters.contains(product.color);
@@ -106,6 +109,7 @@ class ProductService with ChangeNotifier {
     print('After Color Filter: ${filteredProducts.length}');
   }
 
+  // Update the search results
   _searchResults = filteredProducts;
   print('Filtered Products Count: ${_searchResults.length}');
   notifyListeners();

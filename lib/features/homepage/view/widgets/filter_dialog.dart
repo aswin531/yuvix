@@ -24,14 +24,18 @@ class _FilterDialogState extends State<FilterDialog> {
               title: 'Price',
               options: ['Under ₹15,000', '₹15,000 - ₹30,000', '₹30,000 - ₹60,000', 'Above ₹60,000'],
               onChanged: (selectedOptions) {
-                _priceFilters = selectedOptions;
+                setState(() {
+                  _priceFilters = selectedOptions;
+                });
               },
             ),
             FilterOption(
               title: 'Color',
               options: ['Black', 'Blue', 'Red', 'Green', 'White', 'Purple', 'Silver'],
               onChanged: (selectedOptions) {
-                _colorFilters = selectedOptions;
+                setState(() {
+                  _colorFilters = selectedOptions;
+                });
               },
             ),
           ],
@@ -47,10 +51,14 @@ class _FilterDialogState extends State<FilterDialog> {
         TextButton(
           child: Text('Apply'),
           onPressed: () {
-            final filters = {
-              'Price': _priceFilters,
-              'Color': _colorFilters,
-            };
+            final filters = <String, List<String>>{};
+
+            if (_priceFilters.isNotEmpty) {
+              filters['Price'] = _priceFilters;
+            }
+            if (_colorFilters.isNotEmpty) {
+              filters['Color'] = _colorFilters;
+            }
 
             // Apply the filters using the ProductService provider
             Provider.of<ProductService>(context, listen: false).filterProducts(filters);
@@ -105,4 +113,5 @@ class _FilterOptionState extends State<FilterOption> {
     );
   }
 }
+
 
