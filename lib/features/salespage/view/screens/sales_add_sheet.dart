@@ -1,10 +1,11 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yuvix/features/inventory/controller/category_Service.dart';
 import 'package:yuvix/features/inventory/controller/product_services.dart';
 import 'package:yuvix/features/inventory/models/category_model.dart';
-import '../../controller/sales_service.dart';
+import 'package:yuvix/features/salespage/controller/sales_service.dart';
 
 class SalesAddPage extends StatefulWidget {
   @override
@@ -93,7 +94,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
                         final product = filteredProducts[index];
                         return ListTile(
                           title: Text(product.productName),
-                          subtitle: Text('Price: ₹${product.price}'),
+                          subtitle: Text('₹${product.price}'),
                           onTap: () {
                             setState(() {
                               _selectedProduct = product.productName;
@@ -112,6 +113,14 @@ class _SalesAddPageState extends State<SalesAddPage> {
         );
       },
     );
+  }
+
+  void _clearProductFields() {
+    setState(() {
+      _selectedProduct = null;
+      _quantityController.clear();
+      _priceController.clear();
+    });
   }
 
   void _saveSales(BuildContext context) {
@@ -150,7 +159,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    double totalAmount = 0.0; // Update this with the total calculation logic
+    double totalAmount = 0.0;
 
     return Scaffold(
       appBar: AppBar(title: Text('Sales Add Page')),
@@ -203,6 +212,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
                     onPressed: _selectProduct,
                   ),
                 ),
+                readOnly: true,
               ),
               SizedBox(height: 5.0),
               TextFormField(
@@ -221,7 +231,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: _clearProductFields,
                     child: Text('Add Product'),
                   ),
                   ElevatedButton(
@@ -231,30 +241,64 @@ class _SalesAddPageState extends State<SalesAddPage> {
                 ],
               ),
               SizedBox(height: 8.0),
-              // Display dummy data or actual data for user and products added
-              SizedBox(height: 8.0),
-              // List of products added to the sale
-              SizedBox(height: 8.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Total'),
-                  Text('\$${totalAmount.toStringAsFixed(2)}'),
-                ],
-              ),
-              SizedBox(height: 8.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Submit'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Cancel'),
-                  ),
-                ],
+              Consumer<SalesProvider>(
+                builder: (context, salesProvider, child) {
+                  final sales = salesProvider.getSales();
+                  if (sales.isEmpty) {
+                    return Text('No sales recorded.');
+                  }
+                  return Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: sales.length,
+                        itemBuilder: (context, index) {
+                          final sale = sales[index];
+                          totalAmount += sale.totalPrice;
+                          return ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(sale.productName),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text('₹${sale.totalPrice}'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 8.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Total: ₹$totalAmount',
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => _saveSales(context),
+                            child: Text('Submit'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text('Cancel'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -263,3 +307,6 @@ class _SalesAddPageState extends State<SalesAddPage> {
     );
   }
 }
+
+
+
