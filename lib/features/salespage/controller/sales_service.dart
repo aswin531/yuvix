@@ -1,20 +1,16 @@
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:yuvix/features/salespage/model/sales_model.dart';
 
 class SalesProvider with ChangeNotifier {
-  final Box<SalesModel> _salesBox = Hive.box<SalesModel>('salesBox');
-
-  List<SalesModel> _sales = [];
+  late Box _salesBox;
 
   SalesProvider() {
-    _loadSales();
+    _initializeSalesBox();
   }
 
-  List<SalesModel> get sales => _sales;
-
-  void _loadSales() {
-    _sales = _salesBox.values.toList();
+  Future<void> _initializeSalesBox() async {
+    _salesBox = await Hive.openBox('sales');
     notifyListeners();
   }
 
@@ -22,33 +18,23 @@ class SalesProvider with ChangeNotifier {
     required String date,
     required String customerName,
     required String mobileNumber,
-    required String productName,
-    required int quantity,
-    required double pricePerUnit,
+    required double totalAmount,
+    required List<Map<String, dynamic>> salesList,
   }) {
-    final sale = SalesModel(
-      date: date,
-      customerName: customerName,
-      mobileNumber: mobileNumber,
-      productName: productName,
-      quantity: quantity,
-      pricePerUnit: pricePerUnit,
-      totalPrice: quantity * pricePerUnit,
-    );
+    final salesData = {
+      'date': date,
+      'customerName': customerName,
+      'mobileNumber': mobileNumber,
+      'totalAmount': totalAmount,
+      'salesList': salesList,
+    };
 
-    _salesBox.add(sale);
-    _sales.add(sale);
-
+    _salesBox.add(salesData);
     notifyListeners();
   }
 
-  List<SalesModel> getSales() {
-    return _sales;
-  }
-
-  void clearSales() {
-    _salesBox.clear();
-    _sales.clear();
-    notifyListeners();
+  List getAllSales() {
+    return _salesBox.values.toList();
   }
 }
+

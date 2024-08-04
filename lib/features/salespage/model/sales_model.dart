@@ -29,3 +29,5 @@ class SalesModel extends HiveObject {
     required this.totalPrice,
   });
 }
+
+

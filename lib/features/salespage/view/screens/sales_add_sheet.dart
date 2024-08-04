@@ -1,5 +1,4 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yuvix/features/inventory/controller/category_Service.dart';
@@ -22,6 +21,8 @@ class _SalesAddPageState extends State<SalesAddPage> {
   String? _selectedCategory;
   String? _selectedProduct;
   late Future<List<CategoryModel>> _categoriesFuture;
+
+  List<Map<String, dynamic>> _salesList = [];
 
   @override
   void initState() {
@@ -123,43 +124,68 @@ class _SalesAddPageState extends State<SalesAddPage> {
     });
   }
 
-  void _saveSales(BuildContext context) {
-    final date = _dateController.text;
-    final customerName = _customerNameController.text;
-    final mobileNumber = _mobileNumberController.text;
+  void _addProduct() {
     final productName = _selectedProduct;
     final quantity = int.tryParse(_quantityController.text) ?? 0;
     final pricePerUnit = double.tryParse(_priceController.text) ?? 0.0;
+    final totalPrice = quantity * pricePerUnit;
 
-    if (date.isEmpty ||
-        customerName.isEmpty ||
-        mobileNumber.isEmpty ||
-        productName == null ||
-        quantity <= 0 ||
-        pricePerUnit <= 0) {
+    if (productName == null || quantity <= 0 || pricePerUnit <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please fill all the fields correctly')),
       );
       return;
     }
 
+    setState(() {
+      _salesList.add({
+        'productName': productName,
+        'quantity': quantity,
+        'pricePerUnit': pricePerUnit,
+        'totalPrice': totalPrice,
+      });
+    });
+
+    _clearProductFields();
+  }
+
+  void _submitSales() {
+    final date = _dateController.text;
+    final customerName = _customerNameController.text;
+    final mobileNumber = _mobileNumberController.text;
+
+    if (date.isEmpty || customerName.isEmpty || mobileNumber.isEmpty || _salesList.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill all the fields correctly')),
+      );
+      return;
+    }
+
+    double totalAmount = _salesList.fold(0.0, (sum, item) => sum + item['totalPrice']);
+
     Provider.of<SalesProvider>(context, listen: false).saveSales(
       date: date,
       customerName: customerName,
       mobileNumber: mobileNumber,
-      productName: productName,
-      quantity: quantity,
-      pricePerUnit: pricePerUnit,
+      totalAmount: totalAmount,
+      salesList: _salesList,
     );
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Sales details saved successfully')),
     );
+
+    setState(() {
+      _salesList.clear();
+      _customerNameController.clear();
+      _mobileNumberController.clear();
+      _clearProductFields();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    double totalAmount = 0.0;
+    double totalAmount = _salesList.fold(0.0, (sum, item) => sum + item['totalPrice']);
 
     return Scaffold(
       appBar: AppBar(title: Text('Sales Add Page')),
@@ -231,75 +257,44 @@ class _SalesAddPageState extends State<SalesAddPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: _clearProductFields,
+                    onPressed: _addProduct,
                     child: Text('Add Product'),
                   ),
                   ElevatedButton(
-                    onPressed: () => _saveSales(context),
-                    child: Text('Save'),
+                    onPressed: _submitSales,
+                    child: Text('Submit'),
                   ),
                 ],
               ),
               SizedBox(height: 8.0),
-              Consumer<SalesProvider>(
-                builder: (context, salesProvider, child) {
-                  final sales = salesProvider.getSales();
-                  if (sales.isEmpty) {
-                    return Text('No sales recorded.');
-                  }
-                  return Column(
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: sales.length,
-                        itemBuilder: (context, index) {
-                          final sale = sales[index];
-                          totalAmount += sale.totalPrice;
-                          return ListTile(
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(sale.productName),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text('₹${sale.totalPrice}'),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(height: 8.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Total: ₹$totalAmount',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              if (_salesList.isNotEmpty)
+                Column(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: _salesList.length,
+                      itemBuilder: (context, index) {
+                        final sale = _salesList[index];
+                        return ListTile(
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(sale['productName']),
+                              Text('Qty: ${sale['quantity']}'),
+                              Text('₹${sale['totalPrice']}'),
+                            ],
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 16.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () => _saveSales(context),
-                            child: Text('Submit'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text('Cancel'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                },
-              ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 8.0),
+                    Text(
+                      'Total Amount: ₹$totalAmount',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
@@ -307,6 +302,4 @@ class _SalesAddPageState extends State<SalesAddPage> {
     );
   }
 }
-
-
 
