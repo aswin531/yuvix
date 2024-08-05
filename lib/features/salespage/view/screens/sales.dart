@@ -1,7 +1,7 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import 'package:yuvix/features/salespage/controller/sales_service.dart'; 
 import 'package:yuvix/features/salespage/view/screens/sales_add_sheet.dart';
 import '../widget/sale_card.dart';
@@ -38,13 +38,25 @@ class SalesPage extends StatelessWidget {
                   return Center(child: Text('No sales recorded.'));
                 }
 
+                DateTime today = DateTime.now();
+                String formattedToday = DateFormat('yyyy-MM-dd').format(today);
+
+                final todaySales = allSales.where((sale) {
+                  return sale['date'] == formattedToday;
+                }).toList();
+
+                final otherSales = allSales.where((sale) {
+                  return sale['date'] != formattedToday;
+                }).toList();
+
+                final limitedSales = [...todaySales, ...otherSales.take(4)].toList();
+
                 return ListView.builder(
-                  itemCount: allSales.length,
+                  itemCount: limitedSales.length,
                   itemBuilder: (context, index) {
-                    final sale = allSales[index];
+                    final sale = limitedSales[index];
                     final salesList = sale['salesList'] as List<dynamic>;
 
-                    // Aggregate product quantities and total amount
                     Map<String, int> productQuantities = {};
                     double totalAmount = sale['totalAmount'];
 
@@ -52,7 +64,6 @@ class SalesPage extends StatelessWidget {
                       final productName = product['productName'];
                       final productQuantity = product['quantity'] as int;
 
-                      // Update product quantities
                       if (productQuantities.containsKey(productName)) {
                         productQuantities[productName] = productQuantities[productName]! + productQuantity;
                       } else {
@@ -85,7 +96,7 @@ class SalesPage extends StatelessWidget {
               child: Text(
                 'See More',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   color: Colors.blue,
                   fontWeight: FontWeight.bold,
                 ),
