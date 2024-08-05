@@ -168,7 +168,7 @@ class _SalesMoreState extends State<SalesMore> {
                       buyerName: sale['customerName'],
                       mobileNumber: sale['mobileNumber'],
                       totalAmount: totalAmount,
-                      productQuantities: productQuantities,
+                      // productQuantities: productQuantities,
                     );
                   },
                 );

@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:yuvix/features/salespage/controller/sales_service.dart'; 
+import 'package:yuvix/features/salespage/controller/sales_service.dart';
+import 'package:yuvix/features/salespage/view/screens/sale_more.dart'; 
 import 'package:yuvix/features/salespage/view/screens/sales_add_sheet.dart';
 import '../widget/sale_card.dart';
-import 'sale_more.dart';
 
 class SalesPage extends StatelessWidget {
   @override
@@ -55,28 +55,13 @@ class SalesPage extends StatelessWidget {
                   itemCount: limitedSales.length,
                   itemBuilder: (context, index) {
                     final sale = limitedSales[index];
-                    final salesList = sale['salesList'] as List<dynamic>;
 
-                    Map<String, int> productQuantities = {};
-                    double totalAmount = sale['totalAmount'];
-
-                    salesList.forEach((product) {
-                      final productName = product['productName'];
-                      final productQuantity = product['quantity'] as int;
-
-                      if (productQuantities.containsKey(productName)) {
-                        productQuantities[productName] = productQuantities[productName]! + productQuantity;
-                      } else {
-                        productQuantities[productName] = productQuantity;
-                      }
-                    });
-
-                    return SalesCard(
-                      buyerName: sale['customerName'],
-                      mobileNumber: sale['mobileNumber'],
-                      totalAmount: totalAmount,
-                      productQuantities: productQuantities,
-                    );
+                    return  SalesCard(
+                        buyerName: sale['customerName'],
+                        mobileNumber: sale['mobileNumber'],
+                        totalAmount: sale['totalAmount'],
+                      );
+                    
                   },
                 );
               },
@@ -121,3 +106,4 @@ class SalesPage extends StatelessWidget {
     );
   }
 }
+
