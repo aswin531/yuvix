@@ -6,10 +6,10 @@ class SalesProvider with ChangeNotifier {
   late Box _salesBox;
 
   SalesProvider() {
-    _initializeSalesBox();
+    initializeSalesBox();
   }
 
-  Future<void> _initializeSalesBox() async {
+  Future<void> initializeSalesBox() async {
     _salesBox = await Hive.openBox('sales');
     notifyListeners();
   }
@@ -35,6 +35,11 @@ class SalesProvider with ChangeNotifier {
 
   List getAllSales() {
     return _salesBox.values.toList();
-  }
-}
+  }}
+//     List<Map<String, dynamic>> getAllSales() {
+//     return _salesBox.values.cast<Map<String, dynamic>>().toList();
+//   }
+// }
+
+
 

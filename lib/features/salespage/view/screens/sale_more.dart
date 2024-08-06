@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:yuvix/features/salespage/controller/sales_service.dart';
+import 'package:yuvix/features/salespage/view/screens/sales_card_detail.dart';
 import '../widget/sale_card.dart';
 
 class SalesMore extends StatefulWidget {
@@ -142,7 +142,6 @@ class _SalesMoreState extends State<SalesMore> {
                 if (filteredSales.isEmpty) {
                   return Center(child: Text('Please select a date'));
                 }
-
                 return ListView.builder(
                   itemCount: filteredSales.length,
                   itemBuilder: (context, index) {
@@ -164,11 +163,20 @@ class _SalesMoreState extends State<SalesMore> {
                       }
                     });
 
-                    return SalesCard(
-                      buyerName: sale['customerName'],
-                      mobileNumber: sale['mobileNumber'],
-                      totalAmount: totalAmount,
-                      // productQuantities: productQuantities,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SalesCardDetails(sales: Map<String, dynamic>.from(sale)), 
+                          ),
+                        );
+                      },
+                      child:  SalesCard(
+                        buyerName: sale['customerName'],
+                        mobileNumber: sale['mobileNumber'],
+                        totalAmount: totalAmount,
+                      ),
                     );
                   },
                 );
@@ -180,3 +188,4 @@ class _SalesMoreState extends State<SalesMore> {
     );
   }
 }
+
