@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'sales_item_model.dart';
 
 part 'sales_model.g.dart';
 
@@ -11,27 +12,15 @@ class SalesModel extends HiveObject {
   @HiveField(2)
   final String mobileNumber;
   @HiveField(3)
-  final String productName;
+  final double totalAmount;
   @HiveField(4)
-  final int quantity;
-  @HiveField(5)
-  final double pricePerUnit;
-  @HiveField(6)
-  final double totalPrice;
-  @HiveField(7)
-  final salesList;
-
+  final List<SalesItemModel> salesList;
 
   SalesModel({
     required this.date,
     required this.customerName,
     required this.mobileNumber,
-    required this.productName,
-    required this.quantity,
-    required this.pricePerUnit,
-    required this.totalPrice,
-    required this.salesList
+    required this.totalAmount,
+    required this.salesList,
   });
 }
-
-

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:yuvix/features/salespage/controller/sales_service.dart';
 import 'package:yuvix/features/salespage/view/screens/sale_more.dart';
 import 'package:yuvix/features/salespage/view/screens/sales_add_sheet.dart';
+import 'package:yuvix/features/salespage/view/screens/sales_card_detail.dart';
 //import 'package:yuvix/features/salespage/view/screens/sales_card_details.dart';
 import '../widget/sale_card.dart';
 
@@ -51,11 +52,11 @@ class SalesPage extends StatelessWidget {
                       String formattedToday = DateFormat('yyyy-MM-dd').format(today);
 
                       final todaySales = allSales.where((sale) {
-                        return sale['date'] == formattedToday;
+                        return sale.date == formattedToday;
                       }).toList();
 
                       final otherSales = allSales.where((sale) {
-                        return sale['date'] != formattedToday;
+                        return sale.date != formattedToday;
                       }).toList();
 
                       final limitedSales = [...todaySales, ...otherSales.take(4)].toList();
@@ -64,12 +65,19 @@ class SalesPage extends StatelessWidget {
                         itemCount: limitedSales.length,
                         itemBuilder: (context, index) {
                           final sale = limitedSales[index];
+                          
 
-                          return SalesCard(
-                              buyerName: sale['customerName'],
-                              mobileNumber: sale['mobileNumber'],
-                              totalAmount: sale['totalAmount'],
-                            
+                          return InkWell(
+                            onTap: () {
+                              print("::::::::::::::::::::::::::::${sale.salesList}");
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => SalesCardDetails(sales: sale,),));
+                            },
+                            child: SalesCard(
+                                buyerName: sale.customerName,
+                                mobileNumber: sale.mobileNumber,
+                                totalAmount: sale.totalAmount,
+                              
+                            ),
                           );
                         },
                       );

@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yuvix/features/salespage/controller/sales_service.dart';
 import 'package:yuvix/core/constants/color.dart';
+import 'package:yuvix/features/salespage/model/sales_item_model.dart';
 import 'package:yuvix/features/salespage/view/widget/bottom_sheet.dart';
+
 class SalesAddPage extends StatefulWidget {
   @override
   _SalesAddPageState createState() => _SalesAddPageState();
@@ -17,7 +18,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
   TextEditingController _priceController = TextEditingController();
 
   String? _selectedProduct;
-  List<Map<String, dynamic>> _salesList = [];
+  List<SalesItemModel> _salesList = [];
 
   @override
   void initState() {
@@ -47,12 +48,12 @@ class _SalesAddPageState extends State<SalesAddPage> {
     }
 
     setState(() {
-      _salesList.add({
-        'productName': productName,
-        'quantity': quantity,
-        'pricePerUnit': pricePerUnit,
-        'totalPrice': totalPrice,
-      });
+      _salesList.add(SalesItemModel(
+        productName: productName,
+        quantity: quantity,
+        pricePerUnit: pricePerUnit,
+        totalPrice: totalPrice,
+      ));
     });
 
     _clearProductFields();
@@ -63,14 +64,15 @@ class _SalesAddPageState extends State<SalesAddPage> {
     final customerName = _customerNameController.text;
     final mobileNumber = _mobileNumberController.text;
 
-    if (date.isEmpty || customerName.isEmpty || mobileNumber.isEmpty || _salesList.isEmpty) {
+    if (date.isEmpty || customerName.isEmpty || mobileNumber.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please fill all the fields correctly')),
       );
       return;
     }
+    print("@@@,,,,,,,,,,,,,,,,,,,,,,@@${_salesList}");
 
-    double totalAmount = _salesList.fold(0.0, (sum, item) => sum + item['totalPrice']);
+    double totalAmount = _salesList.fold(0.0, (sum, item) => sum + item.totalPrice);
 
     Provider.of<SalesProvider>(context, listen: false).saveSales(
       date: date,
@@ -94,7 +96,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    double totalAmount = _salesList.fold(0.0, (sum, item) => sum + item['totalPrice']);
+    double totalAmount = _salesList.fold(0.0, (sum, item) => sum + item.totalPrice);
 
     return Scaffold(
       appBar: AppBar(
@@ -108,7 +110,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Card(
-                color: ColorsConfig.getColor(AppColor.background1), 
+                color: ColorsConfig.getColor(AppColor.background1),
                 elevation: 4,
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: Padding(
@@ -164,7 +166,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
                 ),
               ),
               Card(
-                color: ColorsConfig.getColor(AppColor.background1), 
+                color: ColorsConfig.getColor(AppColor.background1),
                 elevation: 4,
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: Padding(
@@ -218,7 +220,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
               ),
               if (_salesList.isNotEmpty)
                 Card(
-                  color: ColorsConfig.getColor(AppColor.background1), 
+                  color: ColorsConfig.getColor(AppColor.background1),
                   elevation: 4,
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: Padding(
@@ -237,15 +239,15 @@ class _SalesAddPageState extends State<SalesAddPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    sale['productName'],
+                                    sale.productName,
                                     style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
                                   ),
                                   Text(
-                                    'Qty: ${sale['quantity']}',
+                                    'Qty: ${sale.quantity}',
                                     style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
                                   ),
                                   Text(
-                                    '₹${sale['totalPrice']}',
+                                    '₹${sale.totalPrice}',
                                     style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
                                   ),
                                 ],
@@ -266,39 +268,44 @@ class _SalesAddPageState extends State<SalesAddPage> {
                   ),
                 ),
               SizedBox(height: 10),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: _submitSales,
+                    onPressed: () {
+                      _clearProductFields();
+                      setState(() {
+                        _salesList.clear();
+                      });
+                    },
                     child: Text('Cancel'),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: ColorsConfig.getColor(AppColor.textC1),
-                       backgroundColor: ColorsConfig.getColor(AppColor.background2), 
-                       fixedSize: Size(110, 50),
+                      backgroundColor: ColorsConfig.getColor(AppColor.background2),
+                      fixedSize: Size(110, 50),
                     ),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      _clearProductFields();
-                      _salesList.clear();
+                      _submitSales();
                     },
                     child: Text('Save'),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: ColorsConfig.getColor(AppColor.textC1), 
-                      backgroundColor: ColorsConfig.getColor(AppColor.background1), 
+                      foregroundColor: ColorsConfig.getColor(AppColor.textC1),
+                      backgroundColor: ColorsConfig.getColor(AppColor.background1),
                       fixedSize: Size(110, 50),
                     ),
                   ),
+                ],
+              ),
             ],
           ),
-  ]),
+        ),
       ),
-    ),
     );
   }
 
- void _showProductSelectionBottomSheet() {
+  void _showProductSelectionBottomSheet() {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -314,4 +321,3 @@ class _SalesAddPageState extends State<SalesAddPage> {
     );
   }
 }
-

@@ -5,6 +5,7 @@ import 'package:yuvix/core/theme/theme.dart';
 import 'package:yuvix/features/profile/model/user_model.dart';
 // import 'package:yuvix/features/revenue/view/screen/revenue.dart';
 import 'package:yuvix/features/salespage/controller/sales_service.dart';
+import 'package:yuvix/features/salespage/model/sales_item_model.dart';
 
 
 import 'package:yuvix/features/splash/splash.dart';
@@ -41,6 +42,7 @@ void main() async {
   Hive.registerAdapter(ProductModelAdapter());
   Hive.registerAdapter(ProfileModelAdapter());
   Hive.registerAdapter(SalesModelAdapter());
+  Hive.registerAdapter(SalesItemModelAdapter());
   
 
 
