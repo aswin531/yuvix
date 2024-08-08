@@ -21,6 +21,7 @@ class SalesProvider with ChangeNotifier {
     required double totalAmount,
     required List<Map<String, dynamic>> salesList,
   }) {
+    
     final salesData = {
       'date': date,
       'customerName': customerName,
@@ -28,12 +29,15 @@ class SalesProvider with ChangeNotifier {
       'totalAmount': totalAmount,
       'salesList': salesList,
     };
+    print("[[[[[[[[[[[[[[[[[${salesData.values}]]]]]]]]]]]]]]]]]");
 
     _salesBox.add(salesData);
+    print("&&&&&&&&&&&&&&&&&&&&&&&&&&&${_salesBox.values}");
     notifyListeners();
   }
 
   List getAllSales() {
+    print("????????????????????????${_salesBox.values}");
     return _salesBox.values.toList();
   }}
 //     List<Map<String, dynamic>> getAllSales() {

@@ -24,13 +24,14 @@ class SalesModelAdapter extends TypeAdapter<SalesModel> {
       quantity: fields[4] as int,
       pricePerUnit: fields[5] as double,
       totalPrice: fields[6] as double,
+      salesList: fields[7] as dynamic,
     );
   }
 
   @override
   void write(BinaryWriter writer, SalesModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.date)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class SalesModelAdapter extends TypeAdapter<SalesModel> {
       ..writeByte(5)
       ..write(obj.pricePerUnit)
       ..writeByte(6)
-      ..write(obj.totalPrice);
+      ..write(obj.totalPrice)
+      ..writeByte(7)
+      ..write(obj.salesList);
   }
 
   @override

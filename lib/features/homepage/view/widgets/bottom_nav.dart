@@ -58,7 +58,6 @@ class _BottomNavState extends State<BottomNav> {
           InventoryPage(),
           SearchPage(),
           SalesPage(),
-          Container(),
           RevenueChart(),
           ProfilePage(),
         ],

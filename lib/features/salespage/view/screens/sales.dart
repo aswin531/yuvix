@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:yuvix/features/salespage/controller/sales_service.dart';
 import 'package:yuvix/features/salespage/view/screens/sale_more.dart';
 import 'package:yuvix/features/salespage/view/screens/sales_add_sheet.dart';
+//import 'package:yuvix/features/salespage/view/screens/sales_card_details.dart';
 import '../widget/sale_card.dart';
 
 class SalesPage extends StatelessWidget {

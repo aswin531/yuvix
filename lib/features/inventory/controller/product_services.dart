@@ -8,11 +8,11 @@ class ProductService with ChangeNotifier {
   Box<ProductModel>? _productBox;
   List<ProductModel> _products = [];
   List<ProductModel> productsMy = [];
-  List<ProductModel> _searchResults = [];
+  List<ProductModel> _filteredProducts = []; 
   File? _imageFile;
 
   List<ProductModel> get products => _products;
-  List<ProductModel> get searchResults => _searchResults;
+  List<ProductModel> get filteredProducts => _filteredProducts; 
   File? get imageFile => _imageFile;
 
   ProductService() {
@@ -69,9 +69,9 @@ class ProductService with ChangeNotifier {
 
   void searchProducts(String query) {
     if (query.isEmpty) {
-      _searchResults = [];
+      _filteredProducts = []; 
     } else {
-      _searchResults = _products
+      _filteredProducts = _products 
           .where((product) => product.productName.toLowerCase().contains(query.toLowerCase()))
           .toList();
     }
@@ -110,14 +110,14 @@ class ProductService with ChangeNotifier {
       print('After Color Filter: ${filteredProducts.length}');
     }
 
-    _searchResults = filteredProducts;
-    print('Filtered Products Count: ${_searchResults.length}');
+    _filteredProducts = filteredProducts; // Renamed from _searchResults
+    print('Filtered Products Count: ${_filteredProducts.length}'); // Renamed from _searchResults
     notifyListeners();
   }
 
- Future<void> filterProductsByCategory(String categoryName, String query) async {
+  Future<void> filterProductsByCategory(String categoryName, String query) async {
     final productBox = await Hive.openBox<ProductModel>('products');
-    _products = productBox.values
+    _filteredProducts = productBox.values // Renamed from _searchResults
         .where((product) => product.category == categoryName && product.productName.toLowerCase().contains(query.toLowerCase()))
         .toList();
     notifyListeners();

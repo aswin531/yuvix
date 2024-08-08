@@ -9,6 +9,7 @@ class SalesCardDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${sales.values}");
     return Scaffold(
       appBar: AppBar(
         title: Text('Sales Details'),

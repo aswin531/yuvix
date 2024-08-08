@@ -3,6 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:yuvix/core/theme/theme.dart';
 import 'package:yuvix/features/profile/model/user_model.dart';
+// import 'package:yuvix/features/revenue/view/screen/revenue.dart';
 import 'package:yuvix/features/salespage/controller/sales_service.dart';
 
 
@@ -30,6 +31,7 @@ late final brandbox;
 late final productbox;
 late final _profilebox;
 late final salesbox;
+ 
 void main() async {
   // WidgetsFlutterBinding().ensureInitialzed();
   await Hive.initFlutter();
@@ -39,6 +41,7 @@ void main() async {
   Hive.registerAdapter(ProductModelAdapter());
   Hive.registerAdapter(ProfileModelAdapter());
   Hive.registerAdapter(SalesModelAdapter());
+  
 
 
   AuthService authService = AuthService();
@@ -48,6 +51,7 @@ void main() async {
   productbox= await Hive.openBox<ProductModel>('productBox');
   _profilebox= await Hive.openBox<ProfileModel>('profileBox');
    salesbox=await Hive.openBox<SalesModel>('salesBox');
+
   
 
   

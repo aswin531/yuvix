@@ -1,11 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yuvix/features/inventory/controller/category_Service.dart';
-import 'package:yuvix/features/inventory/controller/product_services.dart';
-import 'package:yuvix/features/inventory/models/category_model.dart';
 import 'package:yuvix/features/salespage/controller/sales_service.dart';
-
+import 'package:yuvix/core/constants/color.dart';
+import 'package:yuvix/features/salespage/view/widget/bottom_sheet.dart';
 class SalesAddPage extends StatefulWidget {
   @override
   _SalesAddPageState createState() => _SalesAddPageState();
@@ -18,102 +16,13 @@ class _SalesAddPageState extends State<SalesAddPage> {
   TextEditingController _quantityController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
 
-  String? _selectedCategory;
   String? _selectedProduct;
-  late Future<List<CategoryModel>> _categoriesFuture;
-
   List<Map<String, dynamic>> _salesList = [];
 
   @override
   void initState() {
     super.initState();
     _dateController.text = DateTime.now().toString().split(' ')[0];
-    _categoriesFuture = Provider.of<CategoryService>(context, listen: false).getCategories();
-  }
-
-  void _selectProduct() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        TextEditingController searchController = TextEditingController();
-
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FutureBuilder<List<CategoryModel>>(
-                future: _categoriesFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    return DropdownButtonFormField<String>(
-                      value: _selectedCategory,
-                      onChanged: (newValue) async {
-                        setState(() {
-                          _selectedCategory = newValue!;
-                        });
-                        if (_selectedCategory != null) {
-                          await Provider.of<ProductService>(context, listen: false)
-                              .filterProductsByCategory(_selectedCategory!, searchController.text);
-                        }
-                      },
-                      items: snapshot.data!.map((category) {
-                        return DropdownMenuItem<String>(
-                          value: category.categoryName,
-                          child: Text(category.categoryName!),
-                        );
-                      }).toList(),
-                      decoration: InputDecoration(labelText: 'Select Category'),
-                    );
-                  }
-                },
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: searchController,
-                decoration: InputDecoration(labelText: 'Search Product'),
-                onChanged: (query) async {
-                  if (_selectedCategory != null) {
-                    await Provider.of<ProductService>(context, listen: false)
-                        .filterProductsByCategory(_selectedCategory!, query);
-                  }
-                },
-                enabled: _selectedCategory != null,
-              ),
-              SizedBox(height: 10),
-              Consumer<ProductService>(
-                builder: (context, productService, child) {
-                  final filteredProducts = productService.products;
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: filteredProducts.length,
-                      itemBuilder: (context, index) {
-                        final product = filteredProducts[index];
-                        return ListTile(
-                          title: Text(product.productName),
-                          subtitle: Text('₹${product.price}'),
-                          onTap: () {
-                            setState(() {
-                              _selectedProduct = product.productName;
-                              _priceController.text = product.price.toString();
-                            });
-                            Navigator.pop(context);
-                          },
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   void _clearProductFields() {
@@ -188,117 +97,221 @@ class _SalesAddPageState extends State<SalesAddPage> {
     double totalAmount = _salesList.fold(0.0, (sum, item) => sum + item['totalPrice']);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Sales Add Page')),
+      appBar: AppBar(
+        title: Text('Sales Add Page'),
+        backgroundColor: ColorsConfig.getColor(AppColor.appBar),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
-                controller: _dateController,
-                decoration: InputDecoration(
-                  labelText: 'Date',
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.calendar_today),
-                    onPressed: () async {
-                      DateTime? selectedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2101),
-                      );
-                      if (selectedDate != null) {
-                        setState(() {
-                          _dateController.text = selectedDate.toString().split(' ')[0];
-                        });
-                      }
-                    },
+              Card(
+                color: ColorsConfig.getColor(AppColor.background1), 
+                elevation: 4,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        controller: _dateController,
+                        decoration: InputDecoration(
+                          labelText: 'Date',
+                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.calendar_today, color: ColorsConfig.getColor(AppColor.icon1)),
+                            onPressed: () async {
+                              DateTime? selectedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2101),
+                              );
+                              if (selectedDate != null) {
+                                setState(() {
+                                  _dateController.text = selectedDate.toString().split(' ')[0];
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: _customerNameController,
+                        decoration: InputDecoration(
+                          labelText: 'Customer Name',
+                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                        ),
+                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: _mobileNumberController,
+                        decoration: InputDecoration(
+                          labelText: 'Mobile Number',
+                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                        ),
+                        keyboardType: TextInputType.phone,
+                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(height: 5.0),
-              TextFormField(
-                controller: _customerNameController,
-                decoration: InputDecoration(labelText: 'Customer Name'),
-              ),
-              SizedBox(height: 5.0),
-              TextFormField(
-                controller: _mobileNumberController,
-                decoration: InputDecoration(labelText: 'Mobile Number'),
-                keyboardType: TextInputType.phone,
-              ),
-              SizedBox(height: 5.0),
-              TextFormField(
-                controller: TextEditingController(text: _selectedProduct),
-                decoration: InputDecoration(
-                  labelText: 'Select Product',
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.arrow_drop_down),
-                    onPressed: _selectProduct,
+              Card(
+                color: ColorsConfig.getColor(AppColor.background1), 
+                elevation: 4,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        controller: TextEditingController(text: _selectedProduct),
+                        decoration: InputDecoration(
+                          labelText: 'Select Product',
+                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.arrow_drop_down, color: ColorsConfig.getColor(AppColor.icon1)),
+                            onPressed: () => _showProductSelectionBottomSheet(),
+                          ),
+                        ),
+                        readOnly: true,
+                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: _quantityController,
+                        decoration: InputDecoration(
+                          labelText: 'Quantity',
+                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                        ),
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: _priceController,
+                        decoration: InputDecoration(
+                          labelText: 'Price',
+                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                        ),
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                      ),
+                      SizedBox(height: 10),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: _addProduct,
+                          child: Text('Add Product'),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                readOnly: true,
               ),
-              SizedBox(height: 5.0),
-              TextFormField(
-                controller: _quantityController,
-                decoration: InputDecoration(labelText: 'Quantity'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 5.0),
-              TextFormField(
-                controller: _priceController,
-                decoration: InputDecoration(labelText: 'Price'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 5.0),
-              Row(
+              if (_salesList.isNotEmpty)
+                Card(
+                  color: ColorsConfig.getColor(AppColor.background1), 
+                  elevation: 4,
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _salesList.length,
+                          itemBuilder: (context, index) {
+                            final sale = _salesList[index];
+                            return ListTile(
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    sale['productName'],
+                                    style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                                  ),
+                                  Text(
+                                    'Qty: ${sale['quantity']}',
+                                    style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                                  ),
+                                  Text(
+                                    '₹${sale['totalPrice']}',
+                                    style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        Divider(color: ColorsConfig.getColor(AppColor.textC1)),
+                        Text(
+                          'Total Amount: ₹$totalAmount',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: ColorsConfig.getColor(AppColor.textC1),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              SizedBox(height: 10),
+               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: _addProduct,
-                    child: Text('Add Product'),
+                    onPressed: _submitSales,
+                    child: Text('Cancel'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: ColorsConfig.getColor(AppColor.textC1),
+                       backgroundColor: ColorsConfig.getColor(AppColor.background2), 
+                       fixedSize: Size(110, 50),
+                    ),
                   ),
                   ElevatedButton(
-                    onPressed: _submitSales,
-                    child: Text('Submit'),
+                    onPressed: () {
+                      _clearProductFields();
+                      _salesList.clear();
+                    },
+                    child: Text('Save'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: ColorsConfig.getColor(AppColor.textC1), 
+                      backgroundColor: ColorsConfig.getColor(AppColor.background1), 
+                      fixedSize: Size(110, 50),
+                    ),
                   ),
-                ],
-              ),
-              SizedBox(height: 8.0),
-              if (_salesList.isNotEmpty)
-                Column(
-                  children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: _salesList.length,
-                      itemBuilder: (context, index) {
-                        final sale = _salesList[index];
-                        return ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(sale['productName']),
-                              Text('Qty: ${sale['quantity']}'),
-                              Text('₹${sale['totalPrice']}'),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Total Amount: ₹$totalAmount',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
             ],
           ),
-        ),
+  ]),
       ),
+    ),
+    );
+  }
+
+ void _showProductSelectionBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return ProductSelectionBottomSheet(
+          onProductSelected: (product) {
+            setState(() {
+              _selectedProduct = product.productName;
+              _priceController.text = product.price.toString();
+            });
+          },
+        );
+      },
     );
   }
 }
+

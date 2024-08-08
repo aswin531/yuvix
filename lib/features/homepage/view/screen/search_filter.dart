@@ -58,15 +58,15 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: Consumer<ProductService>(
         builder: (context, provider, child) {
-          if (provider.searchResults.isEmpty && _searchController.text.isNotEmpty) {
+          if (provider.filteredProducts.isEmpty && _searchController.text.isNotEmpty) {
             return Center(
               child: Text('No results found'),
             );
           } else {
             return ListView.builder(
-              itemCount: provider.searchResults.length,
+              itemCount: provider.filteredProducts.length,
               itemBuilder: (context, index) {
-                final product = provider.searchResults[index];
+                final product = provider.filteredProducts[index];
                 return Card(
                   margin: EdgeInsets.all(10),
                   child: ListTile(

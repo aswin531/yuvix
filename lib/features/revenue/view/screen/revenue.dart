@@ -13,33 +13,20 @@ class _RevenueChartState extends State<RevenueChart> {
   List<RevenueData> _filteredData = [];
   int _selectedYear = DateTime.now().year;
 
-  // Sample revenue data for multiple years
-  final List<RevenueData> _allRevenueData = [
-    RevenueData(DateTime(2023, 1, 1), 10000),
-    RevenueData(DateTime(2023, 2, 1), 30000),
-    RevenueData(DateTime(2023, 3, 1), 20000),
-    RevenueData(DateTime(2023, 4, 1), 50000),
-    RevenueData(DateTime(2023, 5, 1), 40000),
-    RevenueData(DateTime(2023, 6, 1), 45000),
-    RevenueData(DateTime(2023, 7, 1), 30000),
-    RevenueData(DateTime(2023, 8, 1), 20000),
-    RevenueData(DateTime(2023, 9, 1), 40000),
-    RevenueData(DateTime(2023, 10, 1), 50000),
-    RevenueData(DateTime(2023, 11, 1), 45000),
-    RevenueData(DateTime(2023, 12, 1), 60000),
-
-    RevenueData(DateTime(2024, 1, 1), 11000),
-    RevenueData(DateTime(2024, 2, 1), 31000),
-    RevenueData(DateTime(2024, 3, 1), 21000),
-    RevenueData(DateTime(2024, 4, 1), 51000),
-    RevenueData(DateTime(2024, 5, 1), 41000),
-    RevenueData(DateTime(2024, 6, 1), 46000),
-    RevenueData(DateTime(2024, 7, 1), 31000),
-    RevenueData(DateTime(2024, 8, 1), 21000),
-    RevenueData(DateTime(2024, 9, 1), 41000),
-    RevenueData(DateTime(2024, 10, 1), 51000),
-    RevenueData(DateTime(2024, 11, 1), 46000),
-    RevenueData(DateTime(2024, 12, 1), 61000),
+  // Original data remains unchanged
+  List<RevenueData> _allRevenueData = [
+    RevenueData(DateTime(2024, 1, 1), 10000),
+    RevenueData(DateTime(2024, 2, 1), 30000),
+    RevenueData(DateTime(2024, 3, 1), 20000),
+    RevenueData(DateTime(2024, 4, 1), 50000),
+    RevenueData(DateTime(2024, 5, ), 40000),
+    RevenueData(DateTime(2024, 6, 1), 45000),
+    RevenueData(DateTime(2024, 7, 1), 30000),
+    RevenueData(DateTime(2024, 8, 1), 20000),
+    RevenueData(DateTime(2024, 9, 1), 40000),
+    RevenueData(DateTime(2024, 10, 1), 50000),
+    RevenueData(DateTime(2024, 11, 1), 45000),
+    RevenueData(DateTime(2024, 12, 1), 60000),
   ];
 
   @override
@@ -78,17 +65,6 @@ class _RevenueChartState extends State<RevenueChart> {
 
   @override
   Widget build(BuildContext context) {
-    List<FlSpot> spots = [];
-    List<String> monthLabels = List.generate(12, (index) => DateFormat('MMM').format(DateTime(_selectedYear, index + 1)));
-
-    for (int i = 1; i <= 12; i++) {
-      final revenue = _filteredData.firstWhere(
-        (data) => data.date.month == i,
-        orElse: () => RevenueData(DateTime(_selectedYear, i, 1), 0),
-      );
-      spots.add(FlSpot(i.toDouble(), revenue.amount.toDouble()));
-    }
-
     return Scaffold(
       backgroundColor: Color(0xFF2C3E50),
       appBar: AppBar(
@@ -175,14 +151,13 @@ class _RevenueChartState extends State<RevenueChart> {
                         bottomTitles: AxisTitles(
                           sideTitles: SideTitles(
                             showTitles: true,
-                            reservedSize: 40,
                             getTitlesWidget: (value, meta) {
-                              int monthIndex = value.toInt() - 1;
-                              if (monthIndex < 0 || monthIndex >= monthLabels.length) return Container();
+                              int month = value.toInt();
+                              if (month < 1 || month > 12) return Container();
                               return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjust padding for spacing
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0), // Adjust padding for spacing
                                 child: Text(
-                                  monthLabels[monthIndex],
+                                  DateFormat('MMM').format(DateTime(_selectedYear, month)),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -206,7 +181,9 @@ class _RevenueChartState extends State<RevenueChart> {
                       maxY: 60000,
                       lineBarsData: [
                         LineChartBarData(
-                          spots: spots,
+                          spots: _filteredData
+                              .map((data) => FlSpot(data.date.month.toDouble(), data.amount.toDouble()))
+                              .toList(),
                           isCurved: true,
                           color: Colors.white,
                           barWidth: 4,

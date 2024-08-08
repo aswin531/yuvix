@@ -18,6 +18,9 @@ class SalesModel extends HiveObject {
   final double pricePerUnit;
   @HiveField(6)
   final double totalPrice;
+  @HiveField(7)
+  final salesList;
+
 
   SalesModel({
     required this.date,
@@ -27,6 +30,7 @@ class SalesModel extends HiveObject {
     required this.quantity,
     required this.pricePerUnit,
     required this.totalPrice,
+    required this.salesList
   });
 }
 
