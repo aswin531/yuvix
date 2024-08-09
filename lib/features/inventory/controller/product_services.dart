@@ -110,14 +110,14 @@ class ProductService with ChangeNotifier {
       print('After Color Filter: ${filteredProducts.length}');
     }
 
-    _filteredProducts = filteredProducts; // Renamed from _searchResults
-    print('Filtered Products Count: ${_filteredProducts.length}'); // Renamed from _searchResults
+    _filteredProducts = filteredProducts;
+    print('Filtered Products Count: ${_filteredProducts.length}');
     notifyListeners();
   }
 
   Future<void> filterProductsByCategory(String categoryName, String query) async {
     final productBox = await Hive.openBox<ProductModel>('products');
-    _filteredProducts = productBox.values // Renamed from _searchResults
+    _filteredProducts = productBox.values
         .where((product) => product.category == categoryName && product.productName.toLowerCase().contains(query.toLowerCase()))
         .toList();
     notifyListeners();

@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -18,8 +20,6 @@ class _SalesMoreState extends State<SalesMore> {
   DateTime? startDate;
   DateTime? endDate;
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
-  int totalQuantity=0;
-  double filterTotalAmount=0;
 
   @override
   Widget build(BuildContext context) {
@@ -133,30 +133,12 @@ class _SalesMoreState extends State<SalesMore> {
           Expanded(
             child: Consumer<SalesProvider>(
               builder: (context, salesProvider, child) {
-                final allSales = salesProvider.getAllSales();
-                final filteredSales = (startDate != null && endDate != null)
-                    ? allSales.where((sale) {
-                        DateTime saleDate = DateTime.parse(sale.date);
-                        return saleDate.isAfter(startDate!.subtract(Duration(days: 1))) &&
-                            saleDate.isBefore(endDate!.add(Duration(days: 1)));
-                      }).toList()
-                    : [];
-                      for(int i=0;i<filteredSales.length;i++){
-                        final SalesModel sale = filteredSales[i];
-                        totalQuantity+=sale.salesList.length;
-                        filterTotalAmount+= sale.totalAmount;
-                      //  for (var j = 0; j < sale.salesList.length; j++) {
-                      //   totalQuantity+= sale.salesList[j].
-                         
-                      //  }
-                       
-                      }
-                   print("............................%%%%%%%%%%%%    ${totalQuantity}");
-                   print("............................!!!!!!!!!!!!    ${filterTotalAmount}");
+                final filteredSales = salesProvider.getFilteredSales(startDate, endDate);
+                final totalQuantity = salesProvider.getTotalQuantity(filteredSales);
+                final filterTotalAmount = salesProvider.getTotalAmount(filteredSales);
 
-                   
-
-                   
+                print("Total Quantity: $totalQuantity");
+                print("Total Filtered Amount: $filterTotalAmount");
 
                 if (filteredSales.isEmpty) {
                   return Center(child: Text('Please select a date'));
@@ -166,14 +148,11 @@ class _SalesMoreState extends State<SalesMore> {
                   itemBuilder: (context, index) {
                     final SalesModel sale = filteredSales[index];
                     final salesList = sale.salesList.toList();
-                    totalQuantity += sale.salesList.length;
-                   // print(";;;;;;;;;;;;;;;;;;;;;;;${totalQuantity}");
 
                     Map<String, int> productQuantities = {};
                     double totalAmount = sale.totalAmount;
 
                     salesList.forEach((product) {
-                      
                       final productName = product.productName;
                       final productQuantity = product.quantity;
 
@@ -184,18 +163,17 @@ class _SalesMoreState extends State<SalesMore> {
                         productQuantities[productName] = productQuantity;
                       }
                     });
-                  //  final prodectQuantity =salesList.length;
 
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SalesCardDetails(sales:sale), 
+                            builder: (context) => SalesCardDetails(sales: sale),
                           ),
                         );
                       },
-                      child:  SalesCard(
+                      child: SalesCard(
                         buyerName: sale.customerName,
                         mobileNumber: sale.mobileNumber,
                         totalAmount: totalAmount,
@@ -211,3 +189,4 @@ class _SalesMoreState extends State<SalesMore> {
     );
   }
 }
+

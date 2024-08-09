@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class Privacy extends StatefulWidget {
-  const Privacy({super.key});
+class TermsConditions extends StatefulWidget {
+  const TermsConditions({super.key});
 
   @override
-  _PrivacyState createState() => _PrivacyState();
+  _TermsConditionsState createState() => _TermsConditionsState();
 }
 
-class _PrivacyState extends State<Privacy> {
+class _TermsConditionsState extends State<TermsConditions> {
   late WebViewController _controller;
 
   @override
@@ -38,7 +38,7 @@ class _PrivacyState extends State<Privacy> {
         ),
       )
       ..loadRequest(Uri.parse(
-          'https://www.freeprivacypolicy.com/live/fec0a0a3-5bcf-492c-bfe6-5114172a886a'));
+          'https://www.freeprivacypolicy.com/live/4b1e54ec-05d8-405c-929d-ffd6d0f0cf9a'));
   }
 
   @override
@@ -52,7 +52,7 @@ class _PrivacyState extends State<Privacy> {
         ),
         toolbarHeight: 100,
         title: const Text(
-          'Privacy Policy',
+          'Terms & Conditions',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         centerTitle: true,

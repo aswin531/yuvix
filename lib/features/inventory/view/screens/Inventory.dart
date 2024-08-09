@@ -6,7 +6,8 @@ import 'package:yuvix/features/inventory/view/widgets/brand/brand_card.dart';
 
 import 'package:yuvix/features/inventory/view/widgets/product/other/build_section_header.dart';
 
-import 'package:provider/provider.dart'; 
+import 'package:provider/provider.dart';
+import 'package:yuvix/features/profile/view/Screens/Settings.dart'; 
 
 
 
@@ -64,9 +65,16 @@ class InventoryPage extends StatelessWidget {
                 Positioned(
                   top: 50,
                   right: 20,
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('Assets/images/logo.png'),
-                    radius: 25,
+                  child: GestureDetector(
+                    onTap: () {
+               Navigator.of(context).push(
+               MaterialPageRoute(builder: (context) => SettingsPage()),
+                      );
+                       },
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('Assets/images/logo.png'),
+                      radius: 25,
+                    ),
                   ),
                 ),
                 Positioned(

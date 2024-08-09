@@ -14,6 +14,16 @@ class _SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final productProvider = Provider.of<ProductService>(context, listen: false);
+      productProvider.searchProducts(''); 
+    });
+  }
+
+  @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
@@ -44,7 +54,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           style: TextStyle(fontSize: 18.0),
           onChanged: (query) {
-            productProvider.searchProducts(query);
+            productProvider.searchProducts(query); 
           },
         ),
         actions: [
@@ -64,9 +74,13 @@ class _SearchPageState extends State<SearchPage> {
             );
           } else {
             return ListView.builder(
-              itemCount: provider.filteredProducts.length,
+              itemCount: provider.filteredProducts.isNotEmpty
+                  ? provider.filteredProducts.length
+                  : provider.products.length, 
               itemBuilder: (context, index) {
-                final product = provider.filteredProducts[index];
+                final product = provider.filteredProducts.isNotEmpty
+                    ? provider.filteredProducts[index]
+                    : provider.products[index]; 
                 return Card(
                   margin: EdgeInsets.all(10),
                   child: ListTile(
@@ -99,3 +113,4 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 }
+

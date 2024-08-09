@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/octicons_icons.dart';
+// import 'package:fluttericon/octicons_icons.dart';
 import 'package:yuvix/features/homepage/view/screen/search_filter.dart';
-import 'package:yuvix/features/profile/view/Screens/profile.dart';
+
 import 'package:yuvix/features/revenue/view/screen/revenue.dart';
 import 'package:yuvix/features/salespage/view/screens/sales.dart';
 
@@ -58,8 +58,8 @@ class _BottomNavState extends State<BottomNav> {
           InventoryPage(),
           SearchPage(),
           SalesPage(),
-          RevenueChart(),
-          ProfilePage(),
+          RevenuePage(),
+         
         ],
         onPageChanged: (index) {
           setState(() {
@@ -89,10 +89,7 @@ class _BottomNavState extends State<BottomNav> {
             icon: Icon(FontAwesome5.chart_bar, color: Colors.white),
             title: Text('Revenue', style: TextStyle(color: Colors.white)),
           ),
-          FlashyTabBarItem(
-            icon: Icon(Octicons.person, color: Colors.white),
-            title: Text('Profile', style: TextStyle(color: Colors.white)),
-          ),
+        
         ],
       ),
     );

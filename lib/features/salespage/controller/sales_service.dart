@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:yuvix/features/salespage/model/sales_item_model.dart';
@@ -15,18 +16,13 @@ class SalesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void saveSales ({
+  void saveSales({
     required String date,
     required String customerName,
     required String mobileNumber,
     required double totalAmount,
     required List<SalesItemModel> salesList,
-  })async {
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${salesList}");
-    for (var element in salesList) {
-      print("(((((((((((((((((${element.pricePerUnit})))))))))))))))))");
-      
-    }
+  }) async {
     final salesData = SalesModel(
       date: date,
       customerName: customerName,
@@ -36,30 +32,37 @@ class SalesProvider with ChangeNotifier {
     );
 
     _salesBox.add(salesData);
- 
-
-    
     notifyListeners();
   }
 
   List<SalesModel> getAllSales() {
-    List<SalesModel> allSales = _salesBox.values.toList();
+    return _salesBox.values.toList();
+  }
 
- for (var sale in allSales) {
-      print('Date: ${sale.date}');
-      print('Customer Name: ${sale.customerName}');
-      print('Mobile Number: ${sale.mobileNumber}');
-      print('Total Amount: ${sale.totalAmount}');
-      print('Sales List:');
-      for (var item in sale.salesList) {
-        print('  - Product Name: ${item.productName}');
-        print('  - Quantity: ${item.quantity}');
-        print('  - Price per Unit: ${item.pricePerUnit}');
-        print('  - Total Price: ${item.totalPrice}');
-      }
-      print('----------------------------------------');
+  List<SalesModel> getFilteredSales(DateTime? startDate, DateTime? endDate) {
+    if (startDate == null || endDate == null) {
+      return [];
     }
+    return _salesBox.values.where((sale) {
+      DateTime saleDate = DateTime.parse(sale.date);
+      return saleDate.isAfter(startDate.subtract(Duration(days: 1))) &&
+          saleDate.isBefore(endDate.add(Duration(days: 1)));
+    }).toList();
+  }
 
-    return allSales;
+  int getTotalQuantity(List<SalesModel> sales) {
+    int totalQuantity = 0;
+    for (var sale in sales) {
+      totalQuantity += sale.salesList.length;
+    }
+    return totalQuantity;
+  }
+
+  double getTotalAmount(List<SalesModel> sales) {
+    double totalAmount = 0;
+    for (var sale in sales) {
+      totalAmount += sale.totalAmount;
+    }
+    return totalAmount;
   }
 }

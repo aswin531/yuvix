@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:yuvix/features/profile/controller/profile_service.dart';
+import 'package:yuvix/features/profile/view/Screens/Privacy.dart';
+import 'package:yuvix/features/profile/view/Screens/terms.dart';
 import 'dart:io';
 import 'login.dart';
-import 'privacy.dart';
 
-class ProfilePage extends StatelessWidget {
+class SettingsPage extends StatelessWidget {
   Future<void> _showLogoutDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -117,9 +118,9 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Settings'),titleTextStyle: TextStyle(color: Colors.white,fontSize: 20),
         centerTitle: true,
-        backgroundColor: Color(0xff03448c),
+        backgroundColor: const Color(0xff03448c),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -132,29 +133,23 @@ class ProfilePage extends StatelessWidget {
                   onTap: () {
                     _editImage(context);
                   },
-                  child: Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: profileProvider.profile.imagePath.isNotEmpty
-                            ? FileImage(File(profileProvider.profile.imagePath))
-                            : AssetImage('Assets/images/logo.png') as ImageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundImage: profileProvider.profile.imagePath.isNotEmpty
+                        ? FileImage(File(profileProvider.profile.imagePath))
+                        : const AssetImage('Assets/images/logo.png') as ImageProvider,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
+               
                 GestureDetector(
                   onTap: () => _editText(context, 'Name'),
                   child: Text(
                     profileProvider.profile.name,
-                    style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold, color: Color(0xff03448c)),
+                    style: const TextStyle(fontSize: 33, fontWeight: FontWeight.bold, color: Color(0xff03448c)),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -162,10 +157,10 @@ class ProfilePage extends StatelessWidget {
                       onTap: () => _editText(context, 'License'),
                       child: Column(
                         children: [
-                          Text('License No:', style: TextStyle(fontSize: 16)),
+                          const Text('License No:', style: TextStyle(fontSize: 16)),
                           Text(
                             profileProvider.profile.licenseNumber,
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -174,15 +169,32 @@ class ProfilePage extends StatelessWidget {
                       onTap: () => _editText(context, 'GST'),
                       child: Column(
                         children: [
-                          Text('GST No:', style: TextStyle(fontSize: 16)),
+                          const Text('GST No:', style: TextStyle(fontSize: 16)),
                           Text(
                             profileProvider.profile.gstNumber,
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => TermsConditions()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff03448c),
+                      foregroundColor: Colors.white,
+                      textStyle: const TextStyle(fontSize: 18),
+                    ),
+                    child: const Text('Terms & Conditions'),
+                  ),
                 ),
                 SizedBox(height: 20),
                 SizedBox(
@@ -193,15 +205,16 @@ class ProfilePage extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => Privacy()),
                       );
                     },
+                    
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff03448c),
+                      backgroundColor: const Color(0xff03448c),
                       foregroundColor: Colors.white,
-                      textStyle: TextStyle(fontSize: 18),
+                      textStyle: const TextStyle(fontSize: 18),
                     ),
-                    child: Text('Privacy Policy'),
+                    child: const Text('Privacy Policy'),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -209,11 +222,11 @@ class ProfilePage extends StatelessWidget {
                       _showLogoutDialog(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff03448c),
+                      backgroundColor: const Color(0xff03448c),
                       foregroundColor: Colors.white,
-                      textStyle: TextStyle(fontSize: 18),
+                      textStyle: const TextStyle(fontSize: 18),
                     ),
-                    child: Text('Logout'),
+                    child: const Text('Logout'),
                   ),
                 ),
               ],
