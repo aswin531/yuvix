@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 
+import '../../../../../core/constants/color.dart';
 import 'category_add.dart';
 
 class AddCategoryCard extends StatelessWidget {
@@ -26,15 +27,15 @@ class AddCategoryCard extends StatelessWidget {
           height: 120,
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color:  Color(0xff03448c),
+            color:  ConstC.getColor(AppColor.background1),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.add, color: Colors.white,),
+              Icon(Icons.add, color: ConstC.getColor(AppColor.icon1),),
               SizedBox(height: 10),
-              Text(title,style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),),
+              Text(title,style: TextStyle(color:ConstC.getColor(AppColor.textC1),fontWeight: FontWeight.bold),),
             ],
           ),
         ),

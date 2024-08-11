@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:yuvix/core/constants/color.dart';
 import '../../../controller/category_Service.dart';
 import '../../../models/category_model.dart';
 
@@ -81,12 +82,12 @@ class _AddCategoryState extends State<AddCategory> {
                   height: 140,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    border: Border.all(color:ConstC.getColor(AppColor.textC1) ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: _image == null
                       ? Center(
-                          child: Icon(Icons.add_a_photo, size: 40, color: Colors.grey),
+                          child: Icon(Icons.add_a_photo, size: 40, color:ConstC.getColor(AppColor.textC1) ),
                         )
                       : Image.file(
                           _image!,
@@ -105,8 +106,8 @@ class _AddCategoryState extends State<AddCategory> {
                     },
                     child: Text('Cancel'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
+                      backgroundColor: ConstC.getColor(AppColor.buttonBackground2),
+                      foregroundColor: ConstC.getColor(AppColor.textC1),
                       fixedSize: Size(100, 50), 
                     ),
                   ),
@@ -114,8 +115,8 @@ class _AddCategoryState extends State<AddCategory> {
                     onPressed: addCategory,
                     child: Text('Add'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
+                      backgroundColor: ConstC.getColor(AppColor.background1),
+                      foregroundColor: ConstC.getColor(AppColor.textC1),
                       fixedSize: Size(100, 50), 
                     ),
                   ),

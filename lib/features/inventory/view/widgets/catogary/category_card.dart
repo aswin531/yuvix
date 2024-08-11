@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:yuvix/core/constants/color.dart';
 import 'package:yuvix/features/inventory/view/screens/product_display_page.dart';
 import '../../../models/category_model.dart';
 
@@ -10,7 +11,7 @@ class CatCard extends StatelessWidget {
   final CategoryModel cat;
   @override
   Widget build(BuildContext context) {
-    print(".,,,,,,,,,,,,,,,,,,,,,,,,${cat.productCount}");
+   
 
     return Card(
       elevation: 2,
@@ -30,7 +31,7 @@ class CatCard extends StatelessWidget {
           height: 170,
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Color(0xff03448c),
+            color:  ConstC.getColor(AppColor.background1),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Column(
@@ -41,7 +42,7 @@ class CatCard extends StatelessWidget {
                 width: 100,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
+                    color:  ConstC.getColor(AppColor.textC1),
                     image: DecorationImage(image: FileImage(File(cat.image!)))),
               ),
               SizedBox(height: 7),

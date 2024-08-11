@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../../core/constants/color.dart';
 import '../../controller/product_services.dart';
 import '../widgets/product/product_navigator.dart';
 
@@ -16,7 +17,7 @@ class ProductDisplayPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff03448c),
+        backgroundColor: ConstC.getColor(AppColor.appBar),
         title: Text('$category Products'),
       ),
       body: Consumer<ProductService>(builder: (context, value, child) {

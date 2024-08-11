@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:yuvix/core/constants/color.dart';
 import 'package:yuvix/features/profile/controller/auth_services.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,19 +22,15 @@ class _SplashScreenState extends State<SplashScreen> {
     if(isLoggedIn){
        Navigator.pushNamedAndRemoveUntil(context, 'BottomNav',(route) => false);
     }else{
-       Navigator.pushReplacementNamed(context,'login');
-                                      
-                                      
-                                       
+       Navigator.pushReplacementNamed(context,'login');                                 
     }
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: Colors.white,
+       backgroundColor:  ConstC.getColor(AppColor.textC1),
       
    body:Container(
-    
     height: double.infinity,
     width: double.infinity,
     padding: const EdgeInsets.all(20),

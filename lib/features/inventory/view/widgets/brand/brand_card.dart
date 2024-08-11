@@ -1,6 +1,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:yuvix/core/constants/color.dart';
 import '../../../models/brand_model.dart';
 import '../../screens/brand_detail_page.dart';
 
@@ -29,7 +30,7 @@ class BrandCard extends StatelessWidget {
           height: 170,
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Color(0xff03448c),
+            color: ConstC.getColor(AppColor.background1),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Column(
@@ -40,7 +41,7 @@ class BrandCard extends StatelessWidget {
                 width: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Colors.white,
+                  color: ConstC.getColor(AppColor.textC1),
                   image: DecorationImage(
                     image: FileImage(File(brand.brandImage!)),
                   ),

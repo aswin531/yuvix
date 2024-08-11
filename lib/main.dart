@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
-import 'package:yuvix/core/theme/theme.dart';
+import 'package:yuvix/core/constants/color.dart';
 import 'package:yuvix/features/profile/model/user_model.dart';
 // import 'package:yuvix/features/revenue/view/screen/revenue.dart';
 import 'package:yuvix/features/salespage/controller/sales_service.dart';
@@ -80,10 +80,8 @@ class YuvixApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: appTextTheme,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.white,
-        ),
+      
+      scaffoldBackgroundColor:  ConstC.getColor(AppColor.textC1),
       ),
       initialRoute: '/',
       routes: {

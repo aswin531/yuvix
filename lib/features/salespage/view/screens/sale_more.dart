@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:yuvix/core/constants/color.dart';
 import 'package:yuvix/features/salespage/controller/sales_service.dart';
 import 'package:yuvix/features/salespage/model/sales_model.dart';
 import 'package:yuvix/features/salespage/view/screens/sales_card_detail.dart';
@@ -88,7 +89,7 @@ class _SalesMoreState extends State<SalesMore> {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
+                        border: Border.all(color:  ConstC.getColor(AppColor.text)),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(
@@ -117,7 +118,7 @@ class _SalesMoreState extends State<SalesMore> {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
+                        border: Border.all(color:  ConstC.getColor(AppColor.text)),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(

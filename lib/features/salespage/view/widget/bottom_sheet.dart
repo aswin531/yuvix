@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yuvix/features/inventory/controller/category_Service.dart';
@@ -6,7 +8,7 @@ import 'package:yuvix/features/inventory/models/category_model.dart';
 import 'package:yuvix/features/inventory/models/product_model.dart';
 
 class ProductSelectionBottomSheet extends StatefulWidget {
-  final Function(ProductModel) onProductSelected;
+  final Function(ProductModel, int) onProductSelected;
 
   ProductSelectionBottomSheet({required this.onProductSelected});
 
@@ -16,6 +18,7 @@ class ProductSelectionBottomSheet extends StatefulWidget {
 
 class _ProductSelectionBottomSheetState extends State<ProductSelectionBottomSheet> {
   TextEditingController _searchController = TextEditingController();
+  TextEditingController _quantityController = TextEditingController();
   String? _selectedCategory;
   late Future<List<CategoryModel>> _categoriesFuture;
 
@@ -44,7 +47,9 @@ class _ProductSelectionBottomSheetState extends State<ProductSelectionBottomShee
                   value: _selectedCategory,
                   onChanged: (newValue) async {
                     setState(() {
-                      _selectedCategory = newValue!;
+                      _selectedCategory = newValue;
+                      _searchController.clear(); 
+                      _quantityController.clear(); 
                     });
                     if (_selectedCategory != null) {
                       await Provider.of<ProductService>(context, listen: false)
@@ -79,6 +84,14 @@ class _ProductSelectionBottomSheetState extends State<ProductSelectionBottomShee
             ),
           ),
           SizedBox(height: 8.0),
+          TextField(
+            controller: _quantityController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: 'Quantity',
+            ),
+          ),
+          SizedBox(height: 8.0),
           Expanded(
             child: Consumer<ProductService>(
               builder: (context, productService, child) {
@@ -90,7 +103,8 @@ class _ProductSelectionBottomSheetState extends State<ProductSelectionBottomShee
                       title: Text(product.productName),
                       subtitle: Text('Price: ${product.price}'),
                       onTap: () {
-                        widget.onProductSelected(product);
+                        final quantity = int.tryParse(_quantityController.text) ?? 1;
+                        widget.onProductSelected(product, quantity);
                         Navigator.pop(context);
                       },
                     );

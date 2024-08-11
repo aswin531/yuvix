@@ -18,3 +18,4 @@ class CategoryService extends ChangeNotifier {
     return catBox.values.toList(); 
   }
 }
+

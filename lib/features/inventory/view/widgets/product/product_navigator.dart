@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:yuvix/features/inventory/view/screens/other_full_details.dart';
 import 'package:yuvix/features/inventory/view/widgets/product/product_show_card.dart';
 
+import '../../../../../core/constants/color.dart';
 import '../../../controller/product_services.dart';
 import '../../../models/product_model.dart';
 import '../../screens/accessories_page.dart';
@@ -81,7 +82,7 @@ class ProductNavigator extends StatelessWidget {
                           Navigator.pop(context);
                         },
                         child: Text('Delete'),
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                        style: ElevatedButton.styleFrom(backgroundColor:  ConstC.getColor(AppColor.background2)),
                       ),
                       ElevatedButton(
                         onPressed: () {

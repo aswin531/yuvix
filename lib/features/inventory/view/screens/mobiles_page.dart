@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuvix/features/inventory/view/widgets/mobiles/product_details.dart';
 import '../../models/product_model.dart';
-import '../widgets/mobiles/edit_dialogue.dart';
+import '../widgets/product/other/show_dialog.dart';
 
 
 class MobilesFullDetailsPage extends StatelessWidget {
@@ -18,7 +18,7 @@ class MobilesFullDetailsPage extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () => _showEditDialog(context, product),
+            onPressed: () => showEditDialog(context, product),
           ),
         ],
       ),
@@ -30,11 +30,5 @@ class MobilesFullDetailsPage extends StatelessWidget {
       ),
     );
   }
-
-  void _showEditDialog(BuildContext context, ProductModel product) {
-    showDialog(
-      context: context,
-      builder: (context) => EditProductDialog(product: product),
-    );
-  }
 }
+ 

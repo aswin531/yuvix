@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:yuvix/core/constants/color.dart';
 import 'package:yuvix/features/homepage/view/widgets/filter_dialog.dart';
 import 'package:yuvix/features/inventory/controller/product_services.dart';
 
@@ -35,12 +36,14 @@ class _SearchPageState extends State<SearchPage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: ConstC.getColor(AppColor.appBar),
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: ConstC.getColor(AppColor.icon1)),
         title: TextField(
           controller: _searchController,
           decoration: InputDecoration(
-            hintText: 'Search...',
+            
+            hintText: 'Search...' ,
             border: InputBorder.none,
             suffixIcon: _searchController.text.isNotEmpty
                 ? IconButton(
@@ -52,7 +55,7 @@ class _SearchPageState extends State<SearchPage> {
                   )
                 : null,
           ),
-          style: TextStyle(fontSize: 18.0),
+          style: TextStyle(fontSize: 18.0,),
           onChanged: (query) {
             productProvider.searchProducts(query); 
           },
@@ -113,4 +116,45 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import 'package:yuvix/features/homepage/view/widgets/search_appbar.dart';
+// import 'package:yuvix/features/homepage/view/widgets/search_result.dart';
+// import 'package:yuvix/features/inventory/controller/product_services.dart';
+
+// class SearchPage extends StatefulWidget {
+//   @override
+//   _SearchPageState createState() => _SearchPageState();
+// }
+
+// class _SearchPageState extends State<SearchPage> {
+//   final TextEditingController _searchController = TextEditingController();
+
+//   @override
+//   void initState() {
+//     super.initState();
+    
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       final productProvider = Provider.of<ProductService>(context, listen: false);
+//       productProvider.searchProducts(''); 
+//     });
+//   }
+
+//   @override
+//   void dispose() {
+//     _searchController.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: SearchAppBar(searchController: _searchController),
+//       body: SearchResults(searchController: _searchController),
+//     );
+//   }
+// }
+
+// new 
 

@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import '../../../../../core/constants/color.dart';
+
 class ImagePickerWidget extends StatelessWidget {
   final File? image;
   final VoidCallback onTap;
@@ -19,12 +21,12 @@ class ImagePickerWidget extends StatelessWidget {
         height: 140,
         width: double.infinity,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+          border: Border.all(color:  ConstC.getColor(AppColor.text)),
           borderRadius: BorderRadius.circular(10),
         ),
         child: image == null
             ? Center(
-                child: Icon(Icons.add_a_photo, size: 40, color: Colors.grey),
+                child: Icon(Icons.add_a_photo, size: 40, color:  ConstC.getColor(AppColor.text)),
               )
             : Image.file(image!, fit: BoxFit.cover),
       ),

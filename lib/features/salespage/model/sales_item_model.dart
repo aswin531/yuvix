@@ -12,11 +12,14 @@ class SalesItemModel extends HiveObject {
   final double pricePerUnit;
   @HiveField(3)
   final double totalPrice;
+  @HiveField(4)
+  final String categoryName;
 
   SalesItemModel({
     required this.productName,
     required this.quantity,
     required this.pricePerUnit,
     required this.totalPrice,
+    required this.categoryName,
   });
 }

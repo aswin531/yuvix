@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:yuvix/features/profile/controller/profile_service.dart';
-import 'package:yuvix/features/profile/view/Screens/Privacy.dart';
+import 'package:yuvix/features/profile/view/Screens/privacy.dart';
 import 'package:yuvix/features/profile/view/Screens/terms.dart';
 import 'dart:io';
+import '../../../../core/constants/color.dart';
 import 'login.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -16,13 +17,13 @@ class SettingsPage extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Logout'),
-          content: const SingleChildScrollView(
+          content:  SingleChildScrollView(
             child: ListBody(
               children: [
                 Text(
                   'Are you sure you want to logout?',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: ConstC.getColor(AppColor.textC2),
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
@@ -33,8 +34,11 @@ class SettingsPage extends StatelessWidget {
           actions: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.blue,
+                foregroundColor: ConstC.getColor(AppColor.textC1),
+                backgroundColor: ConstC.getColor(AppColor.buttonBackground2),
+                 fixedSize: Size(100, 50)
+
+                
               ),
               child: const Text('Cancel'),
               onPressed: () {
@@ -43,8 +47,10 @@ class SettingsPage extends StatelessWidget {
             ),
             TextButton(
               style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.red,
+                foregroundColor: ConstC.getColor(AppColor.textC1),
+                backgroundColor: ConstC.getColor(AppColor.buttonBackground),
+                 fixedSize: Size(100, 50)
+
               ),
               child: const Text('Logout'),
               onPressed: () {
@@ -118,9 +124,9 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),titleTextStyle: TextStyle(color: Colors.white,fontSize: 20),
+        title: const Text('Settings'),titleTextStyle: TextStyle(color:  ConstC.getColor(AppColor.textC1),fontSize: 20),
         centerTitle: true,
-        backgroundColor: const Color(0xff03448c),
+        backgroundColor:  ConstC.getColor(AppColor.appBar),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -189,8 +195,8 @@ class SettingsPage extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff03448c),
-                      foregroundColor: Colors.white,
+                      backgroundColor: ConstC.getColor(AppColor.buttonBackground),
+                      foregroundColor: ConstC.getColor(AppColor.textC1),
                       textStyle: const TextStyle(fontSize: 18),
                     ),
                     child: const Text('Terms & Conditions'),
@@ -202,13 +208,13 @@ class SettingsPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Privacy()),
+                        MaterialPageRoute(builder: (context) => PrivacyPolicy()),
                       );
                     },
                     
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff03448c),
-                      foregroundColor: Colors.white,
+                      backgroundColor: ConstC.getColor(AppColor.buttonBackground),
+                      foregroundColor: ConstC.getColor(AppColor.textC1),
                       textStyle: const TextStyle(fontSize: 18),
                     ),
                     child: const Text('Privacy Policy'),
@@ -222,11 +228,26 @@ class SettingsPage extends StatelessWidget {
                       _showLogoutDialog(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff03448c),
-                      foregroundColor: Colors.white,
+                      backgroundColor: ConstC.getColor(AppColor.buttonBackground),
+                      foregroundColor: ConstC.getColor(AppColor.textC1),
                       textStyle: const TextStyle(fontSize: 18),
                     ),
                     child: const Text('Logout'),
+                  ),
+                ),
+              SizedBox(height:80),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'Version 1.0',
+                      style: TextStyle(
+                        color: ConstC.getColor(AppColor.text), 
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
                 ),
               ],

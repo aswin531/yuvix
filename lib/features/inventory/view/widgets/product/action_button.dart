@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/constants/color.dart';
+
 class ActionButtons extends StatelessWidget {
   final VoidCallback onCancel;
   final VoidCallback onAdd;
@@ -18,8 +20,8 @@ class ActionButtons extends StatelessWidget {
           onPressed: onCancel,
           child: Text('Cancel'),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
+            backgroundColor:  ConstC.getColor(AppColor.buttonBackground2),
+            foregroundColor:  ConstC.getColor(AppColor.textC1),
             fixedSize: Size(100, 50),
           ),
         ),
@@ -27,8 +29,8 @@ class ActionButtons extends StatelessWidget {
           onPressed: onAdd,
           child: Text('Add'),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
+            backgroundColor:  ConstC.getColor(AppColor.background1),
+            foregroundColor:  ConstC.getColor(AppColor.textC1),
             fixedSize: Size(100, 50),
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:yuvix/core/constants/color.dart';
 
 class TermsConditions extends StatefulWidget {
   const TermsConditions({super.key});
@@ -45,18 +46,8 @@ class _TermsConditionsState extends State<TermsConditions> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        toolbarHeight: 100,
-        title: const Text(
-          'Terms & Conditions',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-        centerTitle: true,
-        elevation: 1.0,
+        backgroundColor: ConstC.getColor(AppColor.appBar),
+       
       ),
       body: Column(
         children: [

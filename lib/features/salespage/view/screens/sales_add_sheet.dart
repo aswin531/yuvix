@@ -52,7 +52,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
         productName: productName,
         quantity: quantity,
         pricePerUnit: pricePerUnit,
-        totalPrice: totalPrice,
+        totalPrice: totalPrice, categoryName: '',
       ));
     });
 
@@ -101,7 +101,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Sales Add Page'),
-        backgroundColor: ColorsConfig.getColor(AppColor.appBar),
+        backgroundColor: ConstC.getColor(AppColor.appBar),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -110,7 +110,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Card(
-                color: ColorsConfig.getColor(AppColor.background1),
+                color: ConstC.getColor(AppColor.background1),
                 elevation: 4,
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: Padding(
@@ -122,9 +122,9 @@ class _SalesAddPageState extends State<SalesAddPage> {
                         controller: _dateController,
                         decoration: InputDecoration(
                           labelText: 'Date',
-                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                          labelStyle: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                           suffixIcon: IconButton(
-                            icon: Icon(Icons.calendar_today, color: ColorsConfig.getColor(AppColor.icon1)),
+                            icon: Icon(Icons.calendar_today, color: ConstC.getColor(AppColor.icon1)),
                             onPressed: () async {
                               DateTime? selectedDate = await showDatePicker(
                                 context: context,
@@ -140,33 +140,33 @@ class _SalesAddPageState extends State<SalesAddPage> {
                             },
                           ),
                         ),
-                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                        style: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                       ),
                       SizedBox(height: 10),
                       TextFormField(
                         controller: _customerNameController,
                         decoration: InputDecoration(
                           labelText: 'Customer Name',
-                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                          labelStyle: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                         ),
-                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                        style: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                       ),
                       SizedBox(height: 10),
                       TextFormField(
                         controller: _mobileNumberController,
                         decoration: InputDecoration(
                           labelText: 'Mobile Number',
-                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                          labelStyle: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                         ),
                         keyboardType: TextInputType.phone,
-                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                        style: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                       ),
                     ],
                   ),
                 ),
               ),
               Card(
-                color: ColorsConfig.getColor(AppColor.background1),
+                color: ConstC.getColor(AppColor.background1),
                 elevation: 4,
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: Padding(
@@ -178,34 +178,34 @@ class _SalesAddPageState extends State<SalesAddPage> {
                         controller: TextEditingController(text: _selectedProduct),
                         decoration: InputDecoration(
                           labelText: 'Select Product',
-                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                          labelStyle: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                           suffixIcon: IconButton(
-                            icon: Icon(Icons.arrow_drop_down, color: ColorsConfig.getColor(AppColor.icon1)),
+                            icon: Icon(Icons.arrow_drop_down, color: ConstC.getColor(AppColor.icon1)),
                             onPressed: () => _showProductSelectionBottomSheet(),
                           ),
                         ),
                         readOnly: true,
-                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                        style: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                       ),
                       SizedBox(height: 10),
                       TextFormField(
                         controller: _quantityController,
                         decoration: InputDecoration(
                           labelText: 'Quantity',
-                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                          labelStyle: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                         ),
                         keyboardType: TextInputType.number,
-                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                        style: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                       ),
                       SizedBox(height: 10),
                       TextFormField(
                         controller: _priceController,
                         decoration: InputDecoration(
                           labelText: 'Price',
-                          labelStyle: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                          labelStyle: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                         ),
                         keyboardType: TextInputType.number,
-                        style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                        style: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                       ),
                       SizedBox(height: 10),
                       Center(
@@ -220,7 +220,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
               ),
               if (_salesList.isNotEmpty)
                 Card(
-                  color: ColorsConfig.getColor(AppColor.background1),
+                  color: ConstC.getColor(AppColor.background1),
                   elevation: 4,
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: Padding(
@@ -240,27 +240,27 @@ class _SalesAddPageState extends State<SalesAddPage> {
                                 children: [
                                   Text(
                                     sale.productName,
-                                    style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                                    style: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                                   ),
                                   Text(
                                     'Qty: ${sale.quantity}',
-                                    style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                                    style: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                                   ),
                                   Text(
                                     '₹${sale.totalPrice}',
-                                    style: TextStyle(color: ColorsConfig.getColor(AppColor.textC1)),
+                                    style: TextStyle(color: ConstC.getColor(AppColor.textC1)),
                                   ),
                                 ],
                               ),
                             );
                           },
                         ),
-                        Divider(color: ColorsConfig.getColor(AppColor.textC1)),
+                        Divider(color: ConstC.getColor(AppColor.textC1)),
                         Text(
                           'Total Amount: ₹$totalAmount',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: ColorsConfig.getColor(AppColor.textC1),
+                            color: ConstC.getColor(AppColor.textC1),
                           ),
                         ),
                       ],
@@ -280,8 +280,8 @@ class _SalesAddPageState extends State<SalesAddPage> {
                     },
                     child: Text('Cancel'),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: ColorsConfig.getColor(AppColor.textC1),
-                      backgroundColor: ColorsConfig.getColor(AppColor.background2),
+                      foregroundColor: ConstC.getColor(AppColor.textC1),
+                      backgroundColor: ConstC.getColor(AppColor.buttonBackground2),
                       fixedSize: Size(110, 50),
                     ),
                   ),
@@ -291,8 +291,8 @@ class _SalesAddPageState extends State<SalesAddPage> {
                     },
                     child: Text('Save'),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: ColorsConfig.getColor(AppColor.textC1),
-                      backgroundColor: ColorsConfig.getColor(AppColor.background1),
+                      foregroundColor: ConstC.getColor(AppColor.textC1),
+                      backgroundColor: ConstC.getColor(AppColor.background1),
                       fixedSize: Size(110, 50),
                     ),
                   ),
@@ -305,19 +305,22 @@ class _SalesAddPageState extends State<SalesAddPage> {
     );
   }
 
-  void _showProductSelectionBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return ProductSelectionBottomSheet(
-          onProductSelected: (product) {
-            setState(() {
-              _selectedProduct = product.productName;
-              _priceController.text = product.price.toString();
-            });
-          },
-        );
-      },
-    );
-  }
-}
+
+
+void _showProductSelectionBottomSheet() {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      return ProductSelectionBottomSheet(
+        onProductSelected: (product, quantity) {  
+          setState(() {
+            _selectedProduct = product.productName;
+            _priceController.text = product.price.toString();
+            _quantityController.text = quantity.toString(); 
+          });
+        },
+      );
+    },
+  );
+}}
+

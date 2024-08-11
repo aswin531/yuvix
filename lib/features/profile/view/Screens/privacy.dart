@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:yuvix/core/constants/color.dart';
 
-class Privacy extends StatefulWidget {
-  const Privacy({super.key});
+
+class PrivacyPolicy extends StatefulWidget {
+  const PrivacyPolicy({super.key});
 
   @override
-  _PrivacyState createState() => _PrivacyState();
+  _PrivacyPolicyState createState() => _PrivacyPolicyState();
 }
 
-class _PrivacyState extends State<Privacy> {
+class _PrivacyPolicyState extends State<PrivacyPolicy> {
   late WebViewController _controller;
 
   @override
@@ -20,7 +22,7 @@ class _PrivacyState extends State<Privacy> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
-            // Update loading bar.
+            
           },
           onPageStarted: (String url) {},
           onPageFinished: (String url) {},
@@ -45,18 +47,8 @@ class _PrivacyState extends State<Privacy> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        toolbarHeight: 100,
-        title: const Text(
-          'Privacy Policy',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-        centerTitle: true,
-        elevation: 1.0,
+        backgroundColor: ConstC.getColor(AppColor.appBar),
+     
       ),
       body: Column(
         children: [
