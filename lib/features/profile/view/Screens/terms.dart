@@ -21,7 +21,7 @@ class _TermsConditionsState extends State<TermsConditions> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
-            // Update loading bar.
+           
           },
           onPageStarted: (String url) {},
           onPageFinished: (String url) {},

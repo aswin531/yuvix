@@ -52,7 +52,7 @@ class _SalesAddPageState extends State<SalesAddPage> {
         productName: productName,
         quantity: quantity,
         pricePerUnit: pricePerUnit,
-        totalPrice: totalPrice, categoryName: '',
+        totalPrice: totalPrice, categoryName:'', 
       ));
     });
 

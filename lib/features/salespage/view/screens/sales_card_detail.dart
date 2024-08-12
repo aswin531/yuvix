@@ -1,9 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:yuvix/core/constants/color.dart';
 import 'package:yuvix/features/salespage/model/sales_model.dart';
-import '../widget/s_card_widget.dart';
-
 
 class SalesCardDetails extends StatelessWidget {
   final SalesModel sales;
@@ -14,26 +11,19 @@ class SalesCardDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Sales Details',
-        ),
-        centerTitle: true,
-        titleTextStyle: TextStyle(
-          color: ConstC.getColor(AppColor.textC1),
-          fontSize: 23,
-        ),
-        backgroundColor: ConstC.getColor(AppColor.background1),
+        title: Text('Sales Details'),
+        backgroundColor: Colors.teal,
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(
             decoration: BoxDecoration(
-              color: ConstC.getColor(AppColor.textC1),
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(255, 37, 36, 36).withOpacity(0.2),
+                  color: Colors.grey.withOpacity(0.2),
                   spreadRadius: 2,
                   blurRadius: 8,
                   offset: Offset(0, 4),
@@ -45,18 +35,9 @@ class SalesCardDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SalesCardDetailsWidgets.buildDetailRow(
-                    label: 'Customer Name:',
-                    value: sales.customerName,
-                  ),
-                  SalesCardDetailsWidgets.buildDetailRow(
-                    label: 'Mobile Number:',
-                    value: sales.mobileNumber,
-                  ),
-                  SalesCardDetailsWidgets.buildDetailRow(
-                    label: 'Date:',
-                    value: sales.date,
-                  ),
+                  _buildDetailRow('Customer Name:', sales.customerName ),
+                  _buildDetailRow('Mobile Number:', sales.mobileNumber ),
+                  _buildDetailRow('Date:', sales.date ),
 
                   SizedBox(height: 16),
 
@@ -65,19 +46,60 @@ class SalesCardDetails extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: ConstC.getColor(AppColor.background1),
+                      color: Colors.teal,
                     ),
                   ),
                   SizedBox(height: 8),
 
-                  ...SalesCardDetailsWidgets.buildSalesList(
-                    salesList: sales.salesList,
-                  ),
+                  ...sales.salesList.map<Widget>((item) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 8.0),
+                      padding: const EdgeInsets.all(12.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              item.productName,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          Text(
+                            '₹${item.pricePerUnit.toStringAsFixed(2) } x ${item.quantity }',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
 
                   SizedBox(height: 16),
 
-                  SalesCardDetailsWidgets.buildTotalAmountRow(
-                    totalAmount: sales.totalAmount,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'Total Amount:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.teal,
+                        ),
+                      ),
+                      Text(
+                        '₹${sales.totalAmount.toStringAsFixed(2) }',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.teal,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -87,4 +109,27 @@ class SalesCardDetails extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildDetailRow(String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.teal,
+          ),
+        ),
+        SizedBox(height: 4),
+        Text(
+          value,
+          style: TextStyle(fontSize: 16),
+        ),
+        SizedBox(height: 16),
+      ],
+    );
+  }
 }
+

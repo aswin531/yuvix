@@ -82,12 +82,12 @@ class _AddCategoryState extends State<AddCategory> {
                   height: 140,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    border: Border.all(color:ConstC.getColor(AppColor.textC1) ),
+                    border: Border.all(color:ConstC.getColor(AppColor.text) ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: _image == null
                       ? Center(
-                          child: Icon(Icons.add_a_photo, size: 40, color:ConstC.getColor(AppColor.textC1) ),
+                          child: Icon(Icons.add_a_photo, size: 40, color:ConstC.getColor(AppColor.text) ),
                         )
                       : Image.file(
                           _image!,
